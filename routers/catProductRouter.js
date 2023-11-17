@@ -126,7 +126,6 @@ catProductRouter.put(
 
     // console.log('req------------->>>>', req);
     let object1 = req.body.quanId;
-
     let select;
     const qtydata = await ProductQtyModel.findById({ _id: object1[0] });
     qtydata.Qty = req.body.quantity
