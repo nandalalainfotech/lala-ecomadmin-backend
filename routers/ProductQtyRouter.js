@@ -28,7 +28,6 @@ ProductQtyRouter.put(
     select = await proddata.save();
 
     const Id = req.body._id;
-    // console.log('Id', Id);
     const prodQtyUpdate = await ProductQtyModel.findById(Id);
     if (prodQtyUpdate) {
       prodQtyUpdate.Qty = req.body.Qty;

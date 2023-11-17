@@ -8,7 +8,6 @@ const productSchema = new mongoose.Schema(
     imageId: { type: String, required: false },
     summary: { type: String, required: false },
     description: { type: String, required: false },
-
     featureId: [],
     featurestypevalue: [],
     brand: { type: String, required: false },

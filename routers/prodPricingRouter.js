@@ -80,7 +80,7 @@ ProdPricingRouter.put(
     proddata.taxrule = req.body.priceGroup;
     select = await proddata.save();
 
-    console.log('select--------->>>', select);
+    // console.log('select--------->>>', select);
 
     const Id = req.body._id;
     // console.log('Id', Id);
