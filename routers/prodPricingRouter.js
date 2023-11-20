@@ -67,6 +67,18 @@ ProdPricingRouter.get(
   })
 );
 
+ProdPricingRouter.get(
+  "/pricingOnelist/:id",
+  expressAsyncHandler(async (req, res) => {
+    const pricingDetails = await prodPricingModel.findOne({ mprodId: req.params.id });
+    if (pricingDetails) {
+      res.send(pricingDetails);
+    } else {
+      res.status(404).send({ message: "Pricing details Not Found" });
+    }
+  }),
+);
+
 ProdPricingRouter.put(
   "/updatepricing/:id",
   expressAsyncHandler(async (req, res) => {

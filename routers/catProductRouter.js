@@ -48,6 +48,8 @@ catProductRouter.post("/", isAuth, async (req, res) => {
   qtydata.Qty = req.body.quantity
   select = await qtydata.save();
 
+  // console.log("select-------------->>>", select);
+
   let object2 = req.body.priceId;
   let select1;
   const pricedata = await prodPricingModel.findById({ _id: object2[0] });
@@ -105,6 +107,18 @@ catProductRouter.get(
 );
 
 catProductRouter.get(
+  "/lastcatProduct",
+  expressAsyncHandler(async (req, res) => {
+    const proddetails = await CatlogProduct.find().sort({ _id: -1 }).limit(1);
+    if (proddetails) {
+      res.send(proddetails);
+    } else {
+      res.status(404).send({ message: "Quantity details Not Found" });
+    }
+  }),
+);
+
+catProductRouter.get(
   "/viewcatProduct",
   expressAsyncHandler(async (req, res) => {
     const catProd = await CatlogProduct.find();
@@ -130,6 +144,8 @@ catProductRouter.put(
     const qtydata = await ProductQtyModel.findById({ _id: object1[0] });
     qtydata.Qty = req.body.quantity
     select = await qtydata.save();
+
+    // console.log('select------------->>>>', select);
 
     let object2 = req.body.priceId;
     let select1;
