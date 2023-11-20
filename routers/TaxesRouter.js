@@ -16,11 +16,10 @@ TaxesRouter.get(
 TaxesRouter.post(
   '/taxes',
   expressAsyncHandler(async (req, res) => {
-    // console.log(req);
     const TaxesDetailsSave = new TaxesModel({
       Name: req.body.Name,
       Rate: req.body.Rate,
-      status: req.body.status,
+      checked: req.body.checked,
     });
     const createdtaxes = await TaxesDetailsSave.save();
     res.send({ message: 'Taxes Added', category: createdtaxes });
@@ -67,7 +66,6 @@ TaxesRouter.put('/enable/:id', isAuth, isAdmin, isSeller, async (req, res) => {
   const enableId = req.body.id;
 
   const taxEnable = await TaxesModel.findById(enableId);
-  console.log(taxEnable);
 
   if (taxEnable) {
     if (req.body.active === true) {

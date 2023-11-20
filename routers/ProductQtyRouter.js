@@ -65,4 +65,16 @@ ProductQtyRouter.get(
   }),
 );
 
+ProductQtyRouter.get(
+  "/findOnequantitylist/:id",
+  expressAsyncHandler(async (req, res) => {
+    const Qtydetails = await ProductQtyModel.findOne({ mprodId: req.params.id });
+    if (Qtydetails) {
+      res.send(Qtydetails);
+    } else {
+      res.status(404).send({ message: "Quantity details Not Found" });
+    }
+  }),
+);
+
 export default ProductQtyRouter;
