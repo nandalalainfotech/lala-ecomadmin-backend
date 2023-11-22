@@ -137,7 +137,7 @@ AttributeValueRouter.put(
 
       if (brandUpdate) {
         brandUpdate.value = req.body.value;
-        brandUpdate.attributeVlaue = req.body.atteditType;
+        brandUpdate.attributeVlaue = req.body.attributeVlaue;
         const updatedBrand = await brandUpdate.save();
         res.send({ message: " Updated", newbrand: updatedBrand });
       } else {
@@ -149,7 +149,7 @@ AttributeValueRouter.put(
 
       if (brandUpdate) {
         brandUpdate.value = req.body.value;
-        brandUpdate.attributeVlaue = req.body.atteditType;
+        brandUpdate.attributeVlaue = req.body.attributeVlaue;
         brandUpdate.fieldname = req.file.fieldname;
         brandUpdate.originalname = req.file.originalname;
         brandUpdate.filename = req.file.filename;
@@ -169,7 +169,7 @@ AttributeValueRouter.delete(
     const deleteAttribute = await AttributeValue.findById(req.params.id);
     if (deleteAttribute) {
       const deleteattributed = await deleteAttribute.remove();
-      const categorys = await AttriValue.remove();
+      // const categorys = await AttriValue.remove();
       res.send({ message: "Attributed Deleted", deleteAtt: deleteattributed });
     } else {
       res.status(404).send({ message: "Product Not Found" });

@@ -10,487 +10,487 @@ import subCategoryMaster from "../Models/categorysubMasterModel.js";
 import ThirdCategoryMaster from "../Models/categoryThirdModel.js";
 import FourthCategoryMaster from "../Models/categoryFourthModel.js";
 
-categoryMasterRouter.post(
-  "/",
-  isAuth,
-  upload.single("coverimg"),
-  async (req, res) => {
-    console.log("req", req.body);
-    if (req.body.parent == "undefined") {
-      const categories = new CategoryMaster({
-        name: req.body.name,
-        checked: req.body.checked,
-        parent: req.body.parent,
-        description: req.body.description,
-      });
-      const CategoryMasteruploaded = await categories.save();
+// categoryMasterRouter.post(
+//   "/",
+//   isAuth,
+//   upload.single("coverimg"),
+//   async (req, res) => {
+//     console.log("req=================================", req.body);
+//     if (req.body.parent == "undefined") {
+//       const categories = new CategoryMaster({
+//         name: req.body.name,
+//         checked: req.body.checked,
+//         parent: req.body.parent,
+//         description: req.body.description,
+//       });
+//       const CategoryMasteruploaded = await categories.save();
 
-      res.send({
-        message: "Category created",
-        categorymaster: CategoryMasteruploaded,
-      });
-    } else {
-      let categoryParenttest = await CategoryMaster.findById(req.body.parent);
-      if (categoryParenttest) {
-        const categories = new CategoryMaster({
-          name: req.body.name,
-          checked: req.body.checked,
-          parent: req.body.parent,
-          description: req.body.description,
-        });
+//       res.send({
+//         message: "Category created",
+//         categorymaster: CategoryMasteruploaded,
+//       });
+//     } else {
+//       let categoryParenttest = await CategoryMaster.findById(req.body.parent);
+//       if (categoryParenttest) {
+//         const categories = new CategoryMaster({
+//           name: req.body.name,
+//           checked: req.body.checked,
+//           parent: req.body.parent,
+//           description: req.body.description,
+//         });
 
-        categoryParenttest.children.push(categories);
-        const CategoryMasteruploaded = await categoryParenttest.save();
-      } else {
-        if (req.body.childname === "child-1") {
-          const categories = new CategoryMaster({
-            name: req.body.name,
-            checked: req.body.checked,
-            parent: req.body.parent,
-            parentId: req.body.parentId,
-            description: req.body.description,
-          });
-          let ones = req.body.childIndex;
-          let item = await CategoryMaster.update(
-            { _id: req.body.parentId },
-            {
-              $push: {
-                ["children." + ones + ".children"]: categories,
-              },
-            }
-          );
-        } else if (req.body.childname === "child-2") {
-          const categories = new CategoryMaster({
-            name: req.body.name,
-            checked: req.body.checked,
-            parent: req.body.parent,
-            parentId: req.body.parentId,
-            description: req.body.description,
-          });
-          let child1 = req.body.child1;
-          let test = req.body.childIndex;
-          let item = await CategoryMaster.update(
-            { _id: req.body.parentId },
-            {
-              $push: {
-                // "children.$[].children.2.children": categories,
-                ["children." + child1 + ".children." + test + ".children"]:
-                  categories,
-              },
-            }
-          );
-        } else if (req.body.childname === "child-3") {
-          const categories = new CategoryMaster({
-            name: req.body.name,
-            checked: req.body.checked,
-            parent: req.body.parent,
-            parentId: req.body.parentId,
-            description: req.body.description,
-          });
-          let child1 = req.body.child1;
-          let childs2 = req.body.child2;
-          let childindex = req.body.childIndex;
-          let item = await CategoryMaster.update(
-            { _id: req.body.parentId },
-            {
-              $push: {
-                ["children." +
-                child1 +
-                ".children." +
-                childs2 +
-                ".children." +
-                childindex +
-                ".children"]: categories,
-              },
-            }
-          );
-        } else if (req.body.childname === "child-4") {
-          const categories = new CategoryMaster({
-            name: req.body.name,
-            checked: req.body.checked,
-            parent: req.body.parent,
-            parentId: req.body.parentId,
-            description: req.body.description,
-          });
-          let child1 = req.body.child1;
-          let childs2 = req.body.child2;
-          let childs3 = req.body.child3;
-          let childindex = req.body.childIndex;
-          let item = await CategoryMaster.update(
-            { _id: req.body.parentId },
-            {
-              $push: {
-                ["children." +
-                child1 +
-                ".children." +
-                childs2 +
-                ".children." +
-                childs3 +
-                ".children." +
-                childindex +
-                ".children"]: categories,
-              },
-            }
-          );
-        } else if (req.body.childname === "child-5") {
-          const categories = new CategoryMaster({
-            name: req.body.name,
-            checked: req.body.checked,
-            parent: req.body.parent,
-            parentId: req.body.parentId,
-            description: req.body.description,
-          });
-          let child1 = req.body.child1;
-          let childs2 = req.body.child2;
-          let childs3 = req.body.child3;
-          let childs4 = req.body.child4;
-          let childindex = req.body.childIndex;
-          let item = await CategoryMaster.update(
-            { _id: req.body.parentId },
-            {
-              $push: {
-                ["children." +
-                child1 +
-                ".children." +
-                childs2 +
-                ".children." +
-                childs3 +
-                ".children." +
-                childs4 +
-                ".children." +
-                childindex +
-                ".children"]: categories,
-              },
-            }
-          );
-        } else if (req.body.childname === "child-6") {
-          const categories = new CategoryMaster({
-            name: req.body.name,
-            checked: req.body.checked,
-            parent: req.body.parent,
-            parentId: req.body.parentId,
-            description: req.body.description,
-          });
-          let child1 = req.body.child1;
-          let childs2 = req.body.child2;
-          let childs3 = req.body.child3;
-          let childs4 = req.body.child4;
-          let childs5 = req.body.child5;
-          let childindex = req.body.childIndex;
-          let item = await CategoryMaster.update(
-            { _id: req.body.parentId },
-            {
-              $push: {
-                ["children." +
-                child1 +
-                ".children." +
-                childs2 +
-                ".children." +
-                childs3 +
-                ".children." +
-                childs4 +
-                ".children." +
-                childs5 +
-                ".children." +
-                childindex +
-                ".children"]: categories,
-              },
-            }
-          );
-        } else if (req.body.childname === "child-7") {
-          const categories = new CategoryMaster({
-            name: req.body.name,
-            checked: req.body.checked,
-            parent: req.body.parent,
-            parentId: req.body.parentId,
-            description: req.body.description,
-          });
-          let child1 = req.body.child1;
-          let childs2 = req.body.child2;
-          let childs3 = req.body.child3;
-          let childs4 = req.body.child4;
-          let childs5 = req.body.child5;
-          let childs6 = req.body.child6;
-          let childindex = req.body.childIndex;
+//         categoryParenttest.children.push(categories);
+//         const CategoryMasteruploaded = await categoryParenttest.save();
+//       } else {
+//         if (req.body.childname === "child-1") {
+//           const categories = new CategoryMaster({
+//             name: req.body.name,
+//             checked: req.body.checked,
+//             parent: req.body.parent,
+//             parentId: req.body.parentId,
+//             description: req.body.description,
+//           });
+//           let ones = req.body.childIndex;
+//           let item = await CategoryMaster.update(
+//             { _id: req.body.parentId },
+//             {
+//               $push: {
+//                 ["children." + ones + ".children"]: categories,
+//               },
+//             }
+//           );
+//         } else if (req.body.childname === "child-2") {
+//           const categories = new CategoryMaster({
+//             name: req.body.name,
+//             checked: req.body.checked,
+//             parent: req.body.parent,
+//             parentId: req.body.parentId,
+//             description: req.body.description,
+//           });
+//           let child1 = req.body.child1;
+//           let test = req.body.childIndex;
+//           let item = await CategoryMaster.update(
+//             { _id: req.body.parentId },
+//             {
+//               $push: {
+//                 // "children.$[].children.2.children": categories,
+//                 ["children." + child1 + ".children." + test + ".children"]:
+//                   categories,
+//               },
+//             }
+//           );
+//         } else if (req.body.childname === "child-3") {
+//           const categories = new CategoryMaster({
+//             name: req.body.name,
+//             checked: req.body.checked,
+//             parent: req.body.parent,
+//             parentId: req.body.parentId,
+//             description: req.body.description,
+//           });
+//           let child1 = req.body.child1;
+//           let childs2 = req.body.child2;
+//           let childindex = req.body.childIndex;
+//           let item = await CategoryMaster.update(
+//             { _id: req.body.parentId },
+//             {
+//               $push: {
+//                 ["children." +
+//                   child1 +
+//                   ".children." +
+//                   childs2 +
+//                   ".children." +
+//                   childindex +
+//                   ".children"]: categories,
+//               },
+//             }
+//           );
+//         } else if (req.body.childname === "child-4") {
+//           const categories = new CategoryMaster({
+//             name: req.body.name,
+//             checked: req.body.checked,
+//             parent: req.body.parent,
+//             parentId: req.body.parentId,
+//             description: req.body.description,
+//           });
+//           let child1 = req.body.child1;
+//           let childs2 = req.body.child2;
+//           let childs3 = req.body.child3;
+//           let childindex = req.body.childIndex;
+//           let item = await CategoryMaster.update(
+//             { _id: req.body.parentId },
+//             {
+//               $push: {
+//                 ["children." +
+//                   child1 +
+//                   ".children." +
+//                   childs2 +
+//                   ".children." +
+//                   childs3 +
+//                   ".children." +
+//                   childindex +
+//                   ".children"]: categories,
+//               },
+//             }
+//           );
+//         } else if (req.body.childname === "child-5") {
+//           const categories = new CategoryMaster({
+//             name: req.body.name,
+//             checked: req.body.checked,
+//             parent: req.body.parent,
+//             parentId: req.body.parentId,
+//             description: req.body.description,
+//           });
+//           let child1 = req.body.child1;
+//           let childs2 = req.body.child2;
+//           let childs3 = req.body.child3;
+//           let childs4 = req.body.child4;
+//           let childindex = req.body.childIndex;
+//           let item = await CategoryMaster.update(
+//             { _id: req.body.parentId },
+//             {
+//               $push: {
+//                 ["children." +
+//                   child1 +
+//                   ".children." +
+//                   childs2 +
+//                   ".children." +
+//                   childs3 +
+//                   ".children." +
+//                   childs4 +
+//                   ".children." +
+//                   childindex +
+//                   ".children"]: categories,
+//               },
+//             }
+//           );
+//         } else if (req.body.childname === "child-6") {
+//           const categories = new CategoryMaster({
+//             name: req.body.name,
+//             checked: req.body.checked,
+//             parent: req.body.parent,
+//             parentId: req.body.parentId,
+//             description: req.body.description,
+//           });
+//           let child1 = req.body.child1;
+//           let childs2 = req.body.child2;
+//           let childs3 = req.body.child3;
+//           let childs4 = req.body.child4;
+//           let childs5 = req.body.child5;
+//           let childindex = req.body.childIndex;
+//           let item = await CategoryMaster.update(
+//             { _id: req.body.parentId },
+//             {
+//               $push: {
+//                 ["children." +
+//                   child1 +
+//                   ".children." +
+//                   childs2 +
+//                   ".children." +
+//                   childs3 +
+//                   ".children." +
+//                   childs4 +
+//                   ".children." +
+//                   childs5 +
+//                   ".children." +
+//                   childindex +
+//                   ".children"]: categories,
+//               },
+//             }
+//           );
+//         } else if (req.body.childname === "child-7") {
+//           const categories = new CategoryMaster({
+//             name: req.body.name,
+//             checked: req.body.checked,
+//             parent: req.body.parent,
+//             parentId: req.body.parentId,
+//             description: req.body.description,
+//           });
+//           let child1 = req.body.child1;
+//           let childs2 = req.body.child2;
+//           let childs3 = req.body.child3;
+//           let childs4 = req.body.child4;
+//           let childs5 = req.body.child5;
+//           let childs6 = req.body.child6;
+//           let childindex = req.body.childIndex;
 
-          let item = await CategoryMaster.update(
-            { _id: req.body.parentId },
-            {
-              $push: {
-                ["children." +
-                child1 +
-                ".children." +
-                childs2 +
-                ".children." +
-                childs3 +
-                ".children." +
-                childs4 +
-                ".children." +
-                childs5 +
-                ".children." +
-                childs6 +
-                ".children." +
-                childindex +
-                ".children"]: categories,
-              },
-            }
-          );
-        } else if (req.body.childname === "child-8") {
-          const categories = new CategoryMaster({
-            name: req.body.name,
-            checked: req.body.checked,
-            parent: req.body.parent,
-            parentId: req.body.parentId,
-            description: req.body.description,
-          });
-          let child1 = req.body.child1;
-          let childs2 = req.body.child2;
-          let childs3 = req.body.child3;
-          let childs4 = req.body.child4;
-          let childs5 = req.body.child5;
-          let childs6 = req.body.child6;
-          let childs7 = req.body.child7;
-          let childindex = req.body.childIndex;
-          let item = await CategoryMaster.update(
-            { _id: req.body.parentId },
-            {
-              $push: {
-                ["children." +
-                child1 +
-                ".children." +
-                childs2 +
-                ".children." +
-                childs3 +
-                ".children." +
-                childs4 +
-                ".children." +
-                childs5 +
-                ".children." +
-                childs6 +
-                ".children." +
-                childs7 +
-                ".children." +
-                childindex +
-                ".children"]: categories,
-              },
-            }
-          );
-        }
-        //   if(parentId && "chid1"){
-        //     const categories = new CategoryMaster({
-        //       name: req.body.name,
-        //       checked: req.body.checked,
-        //       parent: req.body.parent,
-        //       description: req.body.description,
-        //     });
-        //     let item = await   CategoryMaster.update({_id: "64ad482afee1acf22289af55", }, {
-        //       '$push': {
-        //          "children": categories
-        //       }
-        //     });
-        //   }
+//           let item = await CategoryMaster.update(
+//             { _id: req.body.parentId },
+//             {
+//               $push: {
+//                 ["children." +
+//                   child1 +
+//                   ".children." +
+//                   childs2 +
+//                   ".children." +
+//                   childs3 +
+//                   ".children." +
+//                   childs4 +
+//                   ".children." +
+//                   childs5 +
+//                   ".children." +
+//                   childs6 +
+//                   ".children." +
+//                   childindex +
+//                   ".children"]: categories,
+//               },
+//             }
+//           );
+//         } else if (req.body.childname === "child-8") {
+//           const categories = new CategoryMaster({
+//             name: req.body.name,
+//             checked: req.body.checked,
+//             parent: req.body.parent,
+//             parentId: req.body.parentId,
+//             description: req.body.description,
+//           });
+//           let child1 = req.body.child1;
+//           let childs2 = req.body.child2;
+//           let childs3 = req.body.child3;
+//           let childs4 = req.body.child4;
+//           let childs5 = req.body.child5;
+//           let childs6 = req.body.child6;
+//           let childs7 = req.body.child7;
+//           let childindex = req.body.childIndex;
+//           let item = await CategoryMaster.update(
+//             { _id: req.body.parentId },
+//             {
+//               $push: {
+//                 ["children." +
+//                   child1 +
+//                   ".children." +
+//                   childs2 +
+//                   ".children." +
+//                   childs3 +
+//                   ".children." +
+//                   childs4 +
+//                   ".children." +
+//                   childs5 +
+//                   ".children." +
+//                   childs6 +
+//                   ".children." +
+//                   childs7 +
+//                   ".children." +
+//                   childindex +
+//                   ".children"]: categories,
+//               },
+//             }
+//           );
+//         }
+//   if(parentId && "chid1"){
+//     const categories = new CategoryMaster({
+//       name: req.body.name,
+//       checked: req.body.checked,
+//       parent: req.body.parent,
+//       description: req.body.description,
+//     });
+//     let item = await   CategoryMaster.update({_id: "64ad482afee1acf22289af55", }, {
+//       '$push': {
+//          "children": categories
+//       }
+//     });
+//   }
 
-        //   let item = await   CategoryMaster.update({_id: "64ad482afee1acf22289af55", }, {
-        //     '$push': {
-        //        "children.$[].children.$[].children.$[].children.$[].children": categories
-        //     }
-        //   });
-      }
-    }
+//   let item = await   CategoryMaster.update({_id: "64ad482afee1acf22289af55", }, {
+//     '$push': {
+//        "children.$[].children.$[].children.$[].children.$[].children": categories
+//     }
+//   });
+//   }
+// }
 
-    // // var descendants = [];
-    // // var stack = [];
-    // let item = await CategoryMaster.update(
-    //   {
-    //     _id: "6437c972011fdc5ad767775b",
-    //     "children._id": "6437c972011fdc5ad767775b",
-    //   },
-    //   {
-    //     $push: {
-    //       "children.$.children": { name: "test item name" },
-    //     },
-    //   }
-    // );
+// // var descendants = [];
+// // var stack = [];
+// let item = await CategoryMaster.update(
+//   {
+//     _id: "6437c972011fdc5ad767775b",
+//     "children._id": "6437c972011fdc5ad767775b",
+//   },
+//   {
+//     $push: {
+//       "children.$.children": { name: "test item name" },
+//     },
+//   }
+// );
 
-    // console.log("item---------->>", item);
-    // stack.push(item);
-    // while (stack.length > 0) {
-    //   var currentnode = stack.pop();
-    //   var children = db.users.find({ userparentid: currentnode.username });
-    //   while (true === children.hasNext()) {
-    //     var child = children.next();
-    //     descendants.push(child.username);
-    //     stack.push(child);
-    //   }
-    // }
-    // descendants.join(",");
-    // const CategoryMasteruploaded = await categories.save();
-    // console.log(req);
-    // let categoryParent;
-    // if (req.body.parent != "home" && req.body.parent != "undefined") {
-    //   categoryParent = await CategoryMaster.findById(req.body.parent);
-    //   if (categoryParent) {
-    //     if (req.file === undefined) {
-    //       const subcategory = new subCategoryMaster({
-    //         name: req.body.name,
-    //         checked: req.body.checked,
-    //         parent: req.body.parent,
-    //         description: req.body.description,
-    //       });
-    //       const updatedsubcategory = await subcategory.save();
-    //       categoryParent.children.push(updatedsubcategory);
-    //       const updatedCategory = await categoryParent.save();
-    //       res.status(201).send({
-    //         message: "Category Added",
-    //         categorymaster: updatedCategory,
-    //       });
-    //     } else {
-    //       const subcategory = new subCategoryMaster({
-    //         name: req.body.name,
-    //         checked: req.body.checked,
-    //         parent: req.body.parent,
-    //         description: req.body.description,
-    //         coverimg: req.file.filename,
-    //       });
-    //       const updatedsubcategory = await subcategory.save();
-    //       categoryParent.children.push(updatedsubcategory);
-    //       const updatedCategory = await categoryParent.save();
-    //       res.status(201).send({
-    //         message: "Category Added",
-    //         categorymaster: updatedCategory,
-    //       });
-    //     }
-    //   } else {
-    //     const categoryChild = await subCategoryMaster.findById(req.body.parent);
-    //     if (categoryChild) {
-    //       if (req.file === undefined) {
-    //         const categoryParent = await CategoryMaster.findById({
-    //           _id: categoryChild.parent,
-    //         });
-    //         const thirdcategory = new ThirdCategoryMaster({
-    //           name: req.body.name,
-    //           checked: req.body.checked,
-    //           parent: req.body.parent,
-    //           description: req.body.description,
-    //         });
+// console.log("item---------->>", item);
+// stack.push(item);
+// while (stack.length > 0) {
+//   var currentnode = stack.pop();
+//   var children = db.users.find({ userparentid: currentnode.username });
+//   while (true === children.hasNext()) {
+//     var child = children.next();
+//     descendants.push(child.username);
+//     stack.push(child);
+//   }
+// }
+// descendants.join(",");
+// const CategoryMasteruploaded = await categories.save();
+// console.log(req);
+// let categoryParent;
+// if (req.body.parent != "home" && req.body.parent != "undefined") {
+//   categoryParent = await CategoryMaster.findById(req.body.parent);
+//   if (categoryParent) {
+//     if (req.file === undefined) {
+//       const subcategory = new subCategoryMaster({
+//         name: req.body.name,
+//         checked: req.body.checked,
+//         parent: req.body.parent,
+//         description: req.body.description,
+//       });
+//       const updatedsubcategory = await subcategory.save();
+//       categoryParent.children.push(updatedsubcategory);
+//       const updatedCategory = await categoryParent.save();
+//       res.status(201).send({
+//         message: "Category Added",
+//         categorymaster: updatedCategory,
+//       });
+//     } else {
+//       const subcategory = new subCategoryMaster({
+//         name: req.body.name,
+//         checked: req.body.checked,
+//         parent: req.body.parent,
+//         description: req.body.description,
+//         coverimg: req.file.filename,
+//       });
+//       const updatedsubcategory = await subcategory.save();
+//       categoryParent.children.push(updatedsubcategory);
+//       const updatedCategory = await categoryParent.save();
+//       res.status(201).send({
+//         message: "Category Added",
+//         categorymaster: updatedCategory,
+//       });
+//     }
+//   } else {
+//     const categoryChild = await subCategoryMaster.findById(req.body.parent);
+//     if (categoryChild) {
+//       if (req.file === undefined) {
+//         const categoryParent = await CategoryMaster.findById({
+//           _id: categoryChild.parent,
+//         });
+//         const thirdcategory = new ThirdCategoryMaster({
+//           name: req.body.name,
+//           checked: req.body.checked,
+//           parent: req.body.parent,
+//           description: req.body.description,
+//         });
 
-    //         let garanChildUpdate = CategoryMaster.updateOne(
-    //           {
-    //             _id: categoryChild.parent,
-    //             "children._id": categoryChild._id,
-    //           },
-    //           {
-    //             $push: { "children.$.children": thirdcategory },
-    //           },
-    //           { new: true }
-    //         );
+//         let garanChildUpdate = CategoryMaster.updateOne(
+//           {
+//             _id: categoryChild.parent,
+//             "children._id": categoryChild._id,
+//           },
+//           {
+//             $push: { "children.$.children": thirdcategory },
+//           },
+//           { new: true }
+//         );
 
-    //         await garanChildUpdate;
-    //         const CategoryGrandChild = await thirdcategory.save();
-    //         categoryChild.children.push(CategoryGrandChild);
-    //         const updatedCategory = await categoryChild.save();
-    //         res.status(201).send({
-    //           message: "Category Added",
-    //           categorymaster: updatedCategory,
-    //         });
-    //       } else {
-    //         const categoryParent = await CategoryMaster.findById({
-    //           _id: categoryChild.parent,
-    //         });
-    //         const thirdcategory = new ThirdCategoryMaster({
-    //           name: req.body.name,
-    //           checked: req.body.checked,
-    //           parent: req.body.parent,
-    //           description: req.body.description,
-    //           coverimg: req.file.filename,
-    //         });
+//         await garanChildUpdate;
+//         const CategoryGrandChild = await thirdcategory.save();
+//         categoryChild.children.push(CategoryGrandChild);
+//         const updatedCategory = await categoryChild.save();
+//         res.status(201).send({
+//           message: "Category Added",
+//           categorymaster: updatedCategory,
+//         });
+//       } else {
+//         const categoryParent = await CategoryMaster.findById({
+//           _id: categoryChild.parent,
+//         });
+//         const thirdcategory = new ThirdCategoryMaster({
+//           name: req.body.name,
+//           checked: req.body.checked,
+//           parent: req.body.parent,
+//           description: req.body.description,
+//           coverimg: req.file.filename,
+//         });
 
-    //         let garanChildUpdate = CategoryMaster.updateOne(
-    //           {
-    //             _id: categoryChild.parent,
-    //             "children._id": categoryChild._id,
-    //           },
-    //           {
-    //             $push: { "children.$.children": thirdcategory },
-    //           },
-    //           { new: true }
-    //         );
+//         let garanChildUpdate = CategoryMaster.updateOne(
+//           {
+//             _id: categoryChild.parent,
+//             "children._id": categoryChild._id,
+//           },
+//           {
+//             $push: { "children.$.children": thirdcategory },
+//           },
+//           { new: true }
+//         );
 
-    //         await garanChildUpdate;
-    //         const CategoryGrandChild = await thirdcategory.save();
-    //         categoryChild.children.push(CategoryGrandChild);
-    //         const updatedCategory = await categoryChild.save();
-    //         res.status(201).send({
-    //           message: "Category Added",
-    //           categorymaster: updatedCategory,
-    //         });
-    //       }
-    //     } else {
-    //       const categorygrandChild = await ThirdCategoryMaster.findById(
-    //         req.body.parent
-    //       );
-    //       const categoryChild = await subCategoryMaster.findById({
-    //         _id: categorygrandChild.parent,
-    //       });
-    //       const categoryParent = await CategoryMaster.findById({
-    //         _id: categoryChild.parent,
-    //       });
-    //       if (categorygrandChild) {
-    //         const fourthcategory = new FourthCategoryMaster({
-    //           name: req.body.name,
-    //           checked: req.body.checked,
-    //           parent: req.body.parent,
-    //           description: req.body.description,
-    //           coverimg: req.file.filename,
-    //         });
+//         await garanChildUpdate;
+//         const CategoryGrandChild = await thirdcategory.save();
+//         categoryChild.children.push(CategoryGrandChild);
+//         const updatedCategory = await categoryChild.save();
+//         res.status(201).send({
+//           message: "Category Added",
+//           categorymaster: updatedCategory,
+//         });
+//       }
+//     } else {
+//       const categorygrandChild = await ThirdCategoryMaster.findById(
+//         req.body.parent
+//       );
+//       const categoryChild = await subCategoryMaster.findById({
+//         _id: categorygrandChild.parent,
+//       });
+//       const categoryParent = await CategoryMaster.findById({
+//         _id: categoryChild.parent,
+//       });
+//       if (categorygrandChild) {
+//         const fourthcategory = new FourthCategoryMaster({
+//           name: req.body.name,
+//           checked: req.body.checked,
+//           parent: req.body.parent,
+//           description: req.body.description,
+//           coverimg: req.file.filename,
+//         });
 
-    //         let userChatGroupUpdate = CategoryMaster.updateOne(
-    //           {
-    //             _id: categoryChild.parent,
-    //             "children._id": categorygrandChild.parent,
-    //             "children._id": categorygrandChild._id,
-    //           },
-    //           {
-    //             $push: { "children.$[].children": fourthcategory },
-    //           },
-    //           { new: true }
-    //         );
-    //         await userChatGroupUpdate;
-    //       }
-    //     }
-    //   }
-    // } else {
-    //   if (req.file === undefined) {
-    //     const categories = new CategoryMaster({
-    //       name: req.body.name,
-    //       checked: req.body.checked,
-    //       parent: req.body.parent,
-    //       description: req.body.description,
-    //     });
-    //     const CategoryMasteruploaded = await categories.save();
+//         let userChatGroupUpdate = CategoryMaster.updateOne(
+//           {
+//             _id: categoryChild.parent,
+//             "children._id": categorygrandChild.parent,
+//             "children._id": categorygrandChild._id,
+//           },
+//           {
+//             $push: { "children.$[].children": fourthcategory },
+//           },
+//           { new: true }
+//         );
+//         await userChatGroupUpdate;
+//       }
+//     }
+//   }
+// } else {
+//   if (req.file === undefined) {
+//     const categories = new CategoryMaster({
+//       name: req.body.name,
+//       checked: req.body.checked,
+//       parent: req.body.parent,
+//       description: req.body.description,
+//     });
+//     const CategoryMasteruploaded = await categories.save();
 
-    //     res.send({
-    //       message: "Category created",
-    //       categorymaster: CategoryMasteruploaded,
-    //     });
-    //   } else {
-    //     const categories = new CategoryMaster({
-    //       name: req.body.name,
-    //       checked: req.body.checked,
-    //       parent: req.body.parent,
-    //       description: req.body.description,
-    //       coverimg: req.file.filename,
-    //     });
-    //     const CategoryMasteruploaded = await categories.save();
+//     res.send({
+//       message: "Category created",
+//       categorymaster: CategoryMasteruploaded,
+//     });
+//   } else {
+//     const categories = new CategoryMaster({
+//       name: req.body.name,
+//       checked: req.body.checked,
+//       parent: req.body.parent,
+//       description: req.body.description,
+//       coverimg: req.file.filename,
+//     });
+//     const CategoryMasteruploaded = await categories.save();
 
-    //     res.send({
-    //       message: "Category created",
-    //       categorymaster: CategoryMasteruploaded,
-    //     });
-    //   }
-    // }
-  }
-);
+//     res.send({
+//       message: "Category created",
+//       categorymaster: CategoryMasteruploaded,
+//     });
+//   }
+// }
+//   }
+// );
 
 // categoryMasterRouter.get(
 //   '/categorymasterList',
@@ -503,6 +503,180 @@ categoryMasterRouter.post(
 //     }
 //   })
 // );
+
+
+categoryMasterRouter.post(
+  "/",
+  isAuth,
+  upload.single("coverimg"),
+  async (req, res) => {
+    // console.log("req----------------------------", req);
+    let categoryParent;
+    if (req.body.parent != "home" && req.body.parent != "undefined") {
+      categoryParent = await CategoryMaster.findById(req.body.parent);
+      if (categoryParent) {
+        if (req.file === undefined) {
+          const subcategory = new subCategoryMaster({
+            name: req.body.name,
+            checked: req.body.checked,
+            parent: req.body.parent,
+            description: req.body.description,
+          });
+          const updatedsubcategory = await subcategory.save();
+          categoryParent.children.push(updatedsubcategory);
+          const updatedCategory = await categoryParent.save();
+          res.status(201).send({
+            message: "Category Added",
+            categorymaster: updatedCategory,
+          });
+        } else {
+          const subcategory = new subCategoryMaster({
+            name: req.body.name,
+            checked: req.body.checked,
+            parent: req.body.parent,
+            description: req.body.description,
+            coverimg: req.file.filename,
+          });
+          const updatedsubcategory = await subcategory.save();
+          categoryParent.children.push(updatedsubcategory);
+          const updatedCategory = await categoryParent.save();
+          res.status(201).send({
+            message: "Category Added",
+            categorymaster: updatedCategory,
+          });
+        }
+      } else {
+        const categoryChild = await subCategoryMaster.findById(req.body.parent);
+        if (categoryChild) {
+          if (req.file === undefined) {
+            const categoryParent = await CategoryMaster.findById({
+              _id: categoryChild.parent,
+            });
+            const thirdcategory = new ThirdCategoryMaster({
+              name: req.body.name,
+              checked: req.body.checked,
+              parent: req.body.parent,
+              description: req.body.description,
+            });
+
+            let garanChildUpdate = CategoryMaster.updateOne(
+              {
+                _id: categoryChild.parent,
+                "children._id": categoryChild._id,
+              },
+              {
+                $push: { "children.$.children": thirdcategory },
+              },
+              { new: true }
+            );
+
+            await garanChildUpdate;
+            const CategoryGrandChild = await thirdcategory.save();
+            categoryChild.children.push(CategoryGrandChild);
+            const updatedCategory = await categoryChild.save();
+            res.status(201).send({
+              message: "Category Added",
+              categorymaster: updatedCategory,
+            });
+          } else {
+            const categoryParent = await CategoryMaster.findById({
+              _id: categoryChild.parent,
+            });
+            const thirdcategory = new ThirdCategoryMaster({
+              name: req.body.name,
+              checked: req.body.checked,
+              parent: req.body.parent,
+              description: req.body.description,
+              coverimg: req.file.filename,
+            });
+
+            let garanChildUpdate = CategoryMaster.updateOne(
+              {
+                _id: categoryChild.parent,
+                "children._id": categoryChild._id,
+              },
+              {
+                $push: { "children.$.children": thirdcategory },
+              },
+              { new: true }
+            );
+
+            await garanChildUpdate;
+            const CategoryGrandChild = await thirdcategory.save();
+            categoryChild.children.push(CategoryGrandChild);
+            const updatedCategory = await categoryChild.save();
+            res.status(201).send({
+              message: "Category Added",
+              categorymaster: updatedCategory,
+            });
+          }
+        } else {
+          const categorygrandChild = await ThirdCategoryMaster.findById(
+            req.body.parent
+          );
+          const categoryChild = await subCategoryMaster.findById({
+            _id: categorygrandChild.parent,
+          });
+          const categoryParent = await CategoryMaster.findById({
+            _id: categoryChild.parent,
+          });
+          if (categorygrandChild) {
+            const fourthcategory = new FourthCategoryMaster({
+              name: req.body.name,
+              checked: req.body.checked,
+              parent: req.body.parent,
+              description: req.body.description,
+              coverimg: req.file.filename,
+            });
+
+            let userChatGroupUpdate = CategoryMaster.updateOne(
+              {
+                _id: categoryChild.parent,
+                "children._id": categorygrandChild.parent,
+                "children._id": categorygrandChild._id,
+              },
+              {
+                $push: { "children.$[].children": fourthcategory },
+              },
+              { new: true }
+            );
+            await userChatGroupUpdate;
+          }
+        }
+      }
+    } else {
+      if (req.file === undefined) {
+        const categories = new CategoryMaster({
+          name: req.body.name,
+          checked: req.body.checked,
+          parent: req.body.parent,
+          description: req.body.description,
+        });
+        const CategoryMasteruploaded = await categories.save();
+
+        res.send({
+          message: "Category created",
+          categorymaster: CategoryMasteruploaded,
+        });
+      } else {
+        const categories = new CategoryMaster({
+          name: req.body.name,
+          checked: req.body.checked,
+          parent: req.body.parent,
+          description: req.body.description,
+          coverimg: req.file.filename,
+        });
+        const CategoryMasteruploaded = await categories.save();
+
+        res.send({
+          message: "Category created",
+          categorymaster: CategoryMasteruploaded,
+        });
+      }
+    }
+  }
+);
+
 
 categoryMasterRouter.get(
   "/categoryMasterSideList",
@@ -539,7 +713,7 @@ categoryMasterRouter.put(
   isSeller,
   upload.single("coverimg"),
   async (req, res) => {
-    console.log("testtt", req.body);
+    // console.log("testtt", req.body);
 
     if (req.body.Cname == "Parent") {
       const categoryobj = await CategoryMaster.findById(req.body.id);
@@ -567,7 +741,7 @@ categoryMasterRouter.put(
       let child1 = req.body.childs1;
       let child2 = req.body.childIndex;
       let test = await CategoryMaster.update(
-        { _id: categoryobj._id },
+        { _id: categoryobj?._id },
         {
           $set: {
             ["children." + child1 + ".children." + child2 + ".name"]:
@@ -587,37 +761,37 @@ categoryMasterRouter.put(
       let child2 = req.body.childs2;
       let child3 = req.body.childIndex;
       let test = await CategoryMaster.update(
-        { _id: categoryobj._id },
+        { id: categoryobj?._id },
         {
           $set: {
             ["children." +
-            child1 +
-            ".children." +
-            child2 +
-            ".children." +
-            child3 +
-            ".name"]: req.body.name,
+              child1 +
+              ".children." +
+              child2 +
+              ".children." +
+              child3 +
+              ".name"]: req.body.name,
             ["children." +
-            child1 +
-            ".children." +
-            child2 +
-            ".children." +
-            child3 +
-            ".checked"]: req.body.checked,
+              child1 +
+              ".children." +
+              child2 +
+              ".children." +
+              child3 +
+              ".checked"]: req.body.checked,
             ["children." +
-            child1 +
-            ".children." +
-            child2 +
-            ".children." +
-            child3 +
-            ".description"]: req.body.description,
+              child1 +
+              ".children." +
+              child2 +
+              ".children." +
+              child3 +
+              ".description"]: req.body.description,
             ["children." +
-            child1 +
-            ".children." +
-            child2 +
-            ".children." +
-            child3 +
-            ".parent"]: req.body.parent,
+              child1 +
+              ".children." +
+              child2 +
+              ".children." +
+              child3 +
+              ".parent"]: req.body.parent,
           },
         }
       );
@@ -632,41 +806,41 @@ categoryMasterRouter.put(
         {
           $set: {
             ["children." +
-            child1 +
-            ".children." +
-            child2 +
-            ".children." +
-            child3 +
-            ".children." +
-            child4 +
-            ".name"]: req.body.name,
+              child1 +
+              ".children." +
+              child2 +
+              ".children." +
+              child3 +
+              ".children." +
+              child4 +
+              ".name"]: req.body.name,
             ["children." +
-            child1 +
-            ".children." +
-            child2 +
-            ".children." +
-            child3 +
-            ".children." +
-            child4 +
-            ".checked"]: req.body.checked,
+              child1 +
+              ".children." +
+              child2 +
+              ".children." +
+              child3 +
+              ".children." +
+              child4 +
+              ".checked"]: req.body.checked,
             ["children." +
-            child1 +
-            ".children." +
-            child2 +
-            ".children." +
-            child3 +
-            ".children." +
-            child4 +
-            ".description"]: req.body.description,
+              child1 +
+              ".children." +
+              child2 +
+              ".children." +
+              child3 +
+              ".children." +
+              child4 +
+              ".description"]: req.body.description,
             ["children." +
-            child1 +
-            ".children." +
-            child2 +
-            ".children." +
-            child3 +
-            ".children." +
-            child4 +
-            ".parent"]: req.body.parent,
+              child1 +
+              ".children." +
+              child2 +
+              ".children." +
+              child3 +
+              ".children." +
+              child4 +
+              ".parent"]: req.body.parent,
           },
         }
       );
@@ -682,49 +856,49 @@ categoryMasterRouter.put(
         {
           $set: {
             ["children." +
-            child1 +
-            ".children." +
-            child2 +
-            ".children." +
-            child3 +
-            ".children." +
-            child4 +
-            ".children." +
-            child5 +
-            ".name"]: req.body.name,
+              child1 +
+              ".children." +
+              child2 +
+              ".children." +
+              child3 +
+              ".children." +
+              child4 +
+              ".children." +
+              child5 +
+              ".name"]: req.body.name,
             ["children." +
-            child1 +
-            ".children." +
-            child2 +
-            ".children." +
-            child3 +
-            ".children." +
-            child4 +
-            ".children." +
-            child5 +
-            ".checked"]: req.body.checked,
+              child1 +
+              ".children." +
+              child2 +
+              ".children." +
+              child3 +
+              ".children." +
+              child4 +
+              ".children." +
+              child5 +
+              ".checked"]: req.body.checked,
             ["children." +
-            child1 +
-            ".children." +
-            child2 +
-            ".children." +
-            child3 +
-            ".children." +
-            child4 +
-            ".children." +
-            child5 +
-            ".description"]: req.body.description,
+              child1 +
+              ".children." +
+              child2 +
+              ".children." +
+              child3 +
+              ".children." +
+              child4 +
+              ".children." +
+              child5 +
+              ".description"]: req.body.description,
             ["children." +
-            child1 +
-            ".children." +
-            child2 +
-            ".children." +
-            child3 +
-            ".children." +
-            child4 +
-            ".children." +
-            child5 +
-            ".parent"]: req.body.parent,
+              child1 +
+              ".children." +
+              child2 +
+              ".children." +
+              child3 +
+              ".children." +
+              child4 +
+              ".children." +
+              child5 +
+              ".parent"]: req.body.parent,
           },
         }
       );
@@ -741,57 +915,57 @@ categoryMasterRouter.put(
         {
           $set: {
             ["children." +
-            child1 +
-            ".children." +
-            child2 +
-            ".children." +
-            child3 +
-            ".children." +
-            child4 +
-            ".children." +
-            child5 +
-            ".children." +
-            child6 +
-            ".name"]: req.body.name,
+              child1 +
+              ".children." +
+              child2 +
+              ".children." +
+              child3 +
+              ".children." +
+              child4 +
+              ".children." +
+              child5 +
+              ".children." +
+              child6 +
+              ".name"]: req.body.name,
             ["children." +
-            child1 +
-            ".children." +
-            child2 +
-            ".children." +
-            child3 +
-            ".children." +
-            child4 +
-            ".children." +
-            child5 +
-            ".children." +
-            child6 +
-            ".checked"]: req.body.checked,
+              child1 +
+              ".children." +
+              child2 +
+              ".children." +
+              child3 +
+              ".children." +
+              child4 +
+              ".children." +
+              child5 +
+              ".children." +
+              child6 +
+              ".checked"]: req.body.checked,
             ["children." +
-            child1 +
-            ".children." +
-            child2 +
-            ".children." +
-            child3 +
-            ".children." +
-            child4 +
-            ".children." +
-            child5 +
-            ".children." +
-            child6 +
-            ".description"]: req.body.description,
+              child1 +
+              ".children." +
+              child2 +
+              ".children." +
+              child3 +
+              ".children." +
+              child4 +
+              ".children." +
+              child5 +
+              ".children." +
+              child6 +
+              ".description"]: req.body.description,
             ["children." +
-            child1 +
-            ".children." +
-            child2 +
-            ".children." +
-            child3 +
-            ".children." +
-            child4 +
-            ".children." +
-            child5 +
-            ".children." +
-            child6 +
-            ".parent"]: req.body.parent,
+              child1 +
+              ".children." +
+              child2 +
+              ".children." +
+              child3 +
+              ".children." +
+              child4 +
+              ".children." +
+              child5 +
+              ".children." +
+              child6 +
+              ".parent"]: req.body.parent,
           },
         }
       );
@@ -809,65 +983,65 @@ categoryMasterRouter.put(
         {
           $set: {
             ["children." +
-            child1 +
-            ".children." +
-            child2 +
-            ".children." +
-            child3 +
-            ".children." +
-            child4 +
-            ".children." +
-            child5 +
-            ".children." +
-            child6 +
-            ".children." +
-            child7 +
-            ".name"]: req.body.name,
+              child1 +
+              ".children." +
+              child2 +
+              ".children." +
+              child3 +
+              ".children." +
+              child4 +
+              ".children." +
+              child5 +
+              ".children." +
+              child6 +
+              ".children." +
+              child7 +
+              ".name"]: req.body.name,
             ["children." +
-            child1 +
-            ".children." +
-            child2 +
-            ".children." +
-            child3 +
-            ".children." +
-            child4 +
-            ".children." +
-            child5 +
-            ".children." +
-            child6 +
-            ".children." +
-            child7 +
-            ".checked"]: req.body.checked,
+              child1 +
+              ".children." +
+              child2 +
+              ".children." +
+              child3 +
+              ".children." +
+              child4 +
+              ".children." +
+              child5 +
+              ".children." +
+              child6 +
+              ".children." +
+              child7 +
+              ".checked"]: req.body.checked,
             ["children." +
-            child1 +
-            ".children." +
-            child2 +
-            ".children." +
-            child3 +
-            ".children." +
-            child4 +
-            ".children." +
-            child5 +
-            ".children." +
-            child6 +
-            ".children." +
-            child7 +
-            ".description"]: req.body.description,
+              child1 +
+              ".children." +
+              child2 +
+              ".children." +
+              child3 +
+              ".children." +
+              child4 +
+              ".children." +
+              child5 +
+              ".children." +
+              child6 +
+              ".children." +
+              child7 +
+              ".description"]: req.body.description,
             ["children." +
-            child1 +
-            ".children." +
-            child2 +
-            ".children." +
-            child3 +
-            ".children." +
-            child4 +
-            ".children." +
-            child5 +
-            ".children." +
-            child6 +
-            ".children." +
-            child7 +
-            ".parent"]: req.body.parent,
+              child1 +
+              ".children." +
+              child2 +
+              ".children." +
+              child3 +
+              ".children." +
+              child4 +
+              ".children." +
+              child5 +
+              ".children." +
+              child6 +
+              ".children." +
+              child7 +
+              ".parent"]: req.body.parent,
           },
         }
       );
@@ -886,73 +1060,73 @@ categoryMasterRouter.put(
         {
           $set: {
             ["children." +
-            child1 +
-            ".children." +
-            child2 +
-            ".children." +
-            child3 +
-            ".children." +
-            child4 +
-            ".children." +
-            child5 +
-            ".children." +
-            child6 +
-            ".children." +
-            child7 +
-            ".children." +
-            child8 +
-            ".name"]: req.body.name,
+              child1 +
+              ".children." +
+              child2 +
+              ".children." +
+              child3 +
+              ".children." +
+              child4 +
+              ".children." +
+              child5 +
+              ".children." +
+              child6 +
+              ".children." +
+              child7 +
+              ".children." +
+              child8 +
+              ".name"]: req.body.name,
             ["children." +
-            child1 +
-            ".children." +
-            child2 +
-            ".children." +
-            child3 +
-            ".children." +
-            child4 +
-            ".children." +
-            child5 +
-            ".children." +
-            child6 +
-            ".children." +
-            child7 +
-            ".children." +
-            child8 +
-            ".checked"]: req.body.checked,
+              child1 +
+              ".children." +
+              child2 +
+              ".children." +
+              child3 +
+              ".children." +
+              child4 +
+              ".children." +
+              child5 +
+              ".children." +
+              child6 +
+              ".children." +
+              child7 +
+              ".children." +
+              child8 +
+              ".checked"]: req.body.checked,
             ["children." +
-            child1 +
-            ".children." +
-            child2 +
-            ".children." +
-            child3 +
-            ".children." +
-            child4 +
-            ".children." +
-            child5 +
-            ".children." +
-            child6 +
-            ".children." +
-            child7 +
-            ".children." +
-            child8 +
-            ".description"]: req.body.description,
+              child1 +
+              ".children." +
+              child2 +
+              ".children." +
+              child3 +
+              ".children." +
+              child4 +
+              ".children." +
+              child5 +
+              ".children." +
+              child6 +
+              ".children." +
+              child7 +
+              ".children." +
+              child8 +
+              ".description"]: req.body.description,
             ["children." +
-            child1 +
-            ".children." +
-            child2 +
-            ".children." +
-            child3 +
-            ".children." +
-            child4 +
-            ".children." +
-            child5 +
-            ".children." +
-            child6 +
-            ".children." +
-            child7 +
-            ".children." +
-            child8 +
-            ".parent"]: req.body.parent,
+              child1 +
+              ".children." +
+              child2 +
+              ".children." +
+              child3 +
+              ".children." +
+              child4 +
+              ".children." +
+              child5 +
+              ".children." +
+              child6 +
+              ".children." +
+              child7 +
+              ".children." +
+              child8 +
+              ".parent"]: req.body.parent,
           },
         }
       );
@@ -972,81 +1146,81 @@ categoryMasterRouter.put(
         {
           $set: {
             ["children." +
-            child1 +
-            ".children." +
-            child2 +
-            ".children." +
-            child3 +
-            ".children." +
-            child4 +
-            ".children." +
-            child5 +
-            ".children." +
-            child6 +
-            ".children." +
-            child7 +
-            ".children." +
-            child8 +
-            ".children." +
-            child9 +
-            ".name"]: req.body.name,
+              child1 +
+              ".children." +
+              child2 +
+              ".children." +
+              child3 +
+              ".children." +
+              child4 +
+              ".children." +
+              child5 +
+              ".children." +
+              child6 +
+              ".children." +
+              child7 +
+              ".children." +
+              child8 +
+              ".children." +
+              child9 +
+              ".name"]: req.body.name,
             ["children." +
-            child1 +
-            ".children." +
-            child2 +
-            ".children." +
-            child3 +
-            ".children." +
-            child4 +
-            ".children." +
-            child5 +
-            ".children." +
-            child6 +
-            ".children." +
-            child7 +
-            ".children." +
-            child8 +
-            ".children." +
-            child9 +
-            ".checked"]: req.body.checked,
+              child1 +
+              ".children." +
+              child2 +
+              ".children." +
+              child3 +
+              ".children." +
+              child4 +
+              ".children." +
+              child5 +
+              ".children." +
+              child6 +
+              ".children." +
+              child7 +
+              ".children." +
+              child8 +
+              ".children." +
+              child9 +
+              ".checked"]: req.body.checked,
             ["children." +
-            child1 +
-            ".children." +
-            child2 +
-            ".children." +
-            child3 +
-            ".children." +
-            child4 +
-            ".children." +
-            child5 +
-            ".children." +
-            child6 +
-            ".children." +
-            child7 +
-            ".children." +
-            child8 +
-            ".children." +
-            child9 +
-            ".description"]: req.body.description,
+              child1 +
+              ".children." +
+              child2 +
+              ".children." +
+              child3 +
+              ".children." +
+              child4 +
+              ".children." +
+              child5 +
+              ".children." +
+              child6 +
+              ".children." +
+              child7 +
+              ".children." +
+              child8 +
+              ".children." +
+              child9 +
+              ".description"]: req.body.description,
             ["children." +
-            child1 +
-            ".children." +
-            child2 +
-            ".children." +
-            child3 +
-            ".children." +
-            child4 +
-            ".children." +
-            child5 +
-            ".children." +
-            child6 +
-            ".children." +
-            child7 +
-            ".children." +
-            child8 +
-            ".children." +
-            child9 +
-            ".parent"]: req.body.parent,
+              child1 +
+              ".children." +
+              child2 +
+              ".children." +
+              child3 +
+              ".children." +
+              child4 +
+              ".children." +
+              child5 +
+              ".children." +
+              child6 +
+              ".children." +
+              child7 +
+              ".children." +
+              child8 +
+              ".children." +
+              child9 +
+              ".parent"]: req.body.parent,
           },
         }
       );
@@ -1533,7 +1707,7 @@ categoryMasterRouter.delete(
             { _id: req.body.parentId },
             {
               $pull: {
-                ["children." + child1 +".children"]: {
+                ["children." + child1 + ".children"]: {
                   _id: mongoose.Types.ObjectId(req.body.childId),
                 },
               },
@@ -1544,7 +1718,7 @@ categoryMasterRouter.delete(
             { _id: req.body.parentId },
             {
               $pull: {
-                ["children." + child1 + ".children." + childs2 +".children"]: {
+                ["children." + child1 + ".children." + childs2 + ".children"]: {
                   _id: mongoose.Types.ObjectId(req.body.childId),
                 },
               },
@@ -1556,12 +1730,12 @@ categoryMasterRouter.delete(
             {
               $pull: {
                 ["children." +
-                child1 +
-                ".children." +
-                childs2 +
-                ".children." +
-                childs3 +
-                ".children"]: {
+                  child1 +
+                  ".children." +
+                  childs2 +
+                  ".children." +
+                  childs3 +
+                  ".children"]: {
                   _id: mongoose.Types.ObjectId(req.body.childId),
                 },
               },
@@ -1573,13 +1747,13 @@ categoryMasterRouter.delete(
             {
               $pull: {
                 ["children." +
-                child1 +
-                ".children." +
-                childs2 +
-                ".children." +
-                childs3 +
-                ".children." +
-                childs4 +".children"]: {
+                  child1 +
+                  ".children." +
+                  childs2 +
+                  ".children." +
+                  childs3 +
+                  ".children." +
+                  childs4 + ".children"]: {
                   _id: mongoose.Types.ObjectId(req.body.childId),
                 },
               },
@@ -1591,16 +1765,16 @@ categoryMasterRouter.delete(
             {
               $pull: {
                 ["children." +
-                child1 +
-                ".children." +
-                childs2 +
-                ".children." +
-                childs3 +
-                ".children." +
-                childs4 +
-                ".children." +
-                childs5 + 
-                ".children"]: {
+                  child1 +
+                  ".children." +
+                  childs2 +
+                  ".children." +
+                  childs3 +
+                  ".children." +
+                  childs4 +
+                  ".children." +
+                  childs5 +
+                  ".children"]: {
                   _id: mongoose.Types.ObjectId(req.body.childId),
                 },
               },
@@ -1612,20 +1786,20 @@ categoryMasterRouter.delete(
             {
               $pull: {
                 ["children." +
-                child1 +
-                ".children." +
-                childs2 +
-                ".children." +
-                childs3 +
-                ".children." +
-                childs4 +
-                ".children." +
-                childs5 +
-                ".children." +
-                childs6 +
-                ".children." +
-                childs7 +
-                ".children"]: {
+                  child1 +
+                  ".children." +
+                  childs2 +
+                  ".children." +
+                  childs3 +
+                  ".children." +
+                  childs4 +
+                  ".children." +
+                  childs5 +
+                  ".children." +
+                  childs6 +
+                  ".children." +
+                  childs7 +
+                  ".children"]: {
                   _id: mongoose.Types.ObjectId(req.body.childId),
                 },
               },
@@ -1637,22 +1811,22 @@ categoryMasterRouter.delete(
             {
               $pull: {
                 ["children." +
-                child1 +
-                ".children." +
-                childs2 +
-                ".children." +
-                childs3 +
-                ".children." +
-                childs4 +
-                ".children." +
-                childs5 +
-                ".children." +
-                childs6 +
-                ".children." +
-                childs7 +
-                ".children." +
-                childs8 +
-                ".children"]: {
+                  child1 +
+                  ".children." +
+                  childs2 +
+                  ".children." +
+                  childs3 +
+                  ".children." +
+                  childs4 +
+                  ".children." +
+                  childs5 +
+                  ".children." +
+                  childs6 +
+                  ".children." +
+                  childs7 +
+                  ".children." +
+                  childs8 +
+                  ".children"]: {
                   _id: mongoose.Types.ObjectId(req.body.childId),
                 },
               },
