@@ -81,4 +81,17 @@ OrderrRouter.delete(
   })
 );
 
+OrderrRouter.delete(
+  "/deletemultipleorder/:id",
+  expressAsyncHandler(async (req, res) => {
+    const deletId = req.body.id;
+    let deleteorder;
+    for (let i = 0; i < deletId.length; i++) {
+      const deleteOrder = await OrderrModel.findById({ _id: deletId[i] });
+      deleteorder = await deleteOrder.remove();
+    }
+    res.send({ message: "Order Deleted", deleteAtt: deleteorder });
+  })
+);
+
 export default OrderrRouter;

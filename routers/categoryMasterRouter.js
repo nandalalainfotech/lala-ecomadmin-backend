@@ -713,7 +713,6 @@ categoryMasterRouter.put(
   isSeller,
   upload.single("coverimg"),
   async (req, res) => {
-    // console.log("testtt", req.body);
 
     if (req.body.Cname == "Parent") {
       const categoryobj = await CategoryMaster.findById(req.body.id);
@@ -737,11 +736,12 @@ categoryMasterRouter.put(
         }
       );
     } else if (req.body.Cname == "child-2") {
-      const categoryobj = await CategoryMaster.findById(req.body.pId);
+      const parentId = req.body.catparent[0];
+      const categoryobj = await CategoryMaster.findById(parentId);
       let child1 = req.body.childs1;
       let child2 = req.body.childIndex;
       let test = await CategoryMaster.update(
-        { _id: categoryobj?._id },
+        { _id: categoryobj._id },
         {
           $set: {
             ["children." + child1 + ".children." + child2 + ".name"]:
@@ -1309,7 +1309,7 @@ categoryMasterRouter.put(
       const updateChildObj = await childdId.save();
       parenttt.children.push(updateChildObj);
       const updatedCategory = await parenttt.save();
-      console.log("categoryChildObject", updatedCategory);
+      // console.log("categoryChildObject", updatedCategory);
       //
       res.send({
         message: "category updated",
@@ -1673,15 +1673,27 @@ categoryMasterRouter.delete(
 categoryMasterRouter.delete(
   "/Categorydelete/:id",
   expressAsyncHandler(async (req, res) => {
+    console.log('req----------------delete', req.body);
+    // const categoryobj = await CategoryMaster.findById(req.body.parentId);
+    // console.log('categoryobj----------------delete', categoryobj);
+    // let deletechilddata;
+    // // let data;
+    // for (let i = 0; i < categoryobj.children.length; i++) {
+    //   const childdele = categoryobj.children[i];
+    //   // data.push(categoryobj.children[i])
+    //   deletechilddata = await childdele.remove();
+    // }
+    // console.log('deletechilddata----------------delete', deletechilddata);
+
     try {
       if (req.body.parent == "undefined") {
         let result = await CategoryMaster.findByIdAndUpdate({
-          _id: "64b4d075fa5c724281633314",
+          parentId: child.parent,
         });
+
         result.remove();
         res.send({ message: "Category Successfully Deleted" });
       } else {
-        console.log("req.body------>>", req.body);
         let child1 = req.body.child1;
         let childs2 = req.body.child2;
         let childs3 = req.body.child3;
