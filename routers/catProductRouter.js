@@ -42,22 +42,22 @@ catProductRouter.post("/", isAuth, async (req, res) => {
   //   featurestypevalue.push(req.body.featurestypevalue[i].id);
   // }
 
-  let objects1 = req.body.qtyId;
-  let select;
-  const qtydata = await ProductQtyModel.findById({ _id: objects1[0] });
-  qtydata.Qty = req.body.quantity
-  select = await qtydata.save();
+  // let objects1 = req.body.qtyId;
+  // let select;
+  // const qtydata = await ProductQtyModel.findById({ _id: objects1[0] });
+  // qtydata.Qty = req.body.quantity
+  // select = await qtydata.save();
 
   // console.log("select-------------->>>", select);
 
-  let object2 = req.body.priceId;
-  let select1;
-  const pricedata = await prodPricingModel.findById({ _id: object2[0] });
-  pricedata.RetailExcl = req.body.taxexcluded;
-  pricedata.RetailIncl = req.body.taxincluded;
-  pricedata.priceGroup = req.body.taxrule;
-  select1 = await pricedata.save();
-
+  // let object2 = req.body.priceId;
+  // let select1;
+  // const pricedata = await prodPricingModel.findById({ _id: object2[0] });
+  // pricedata.RetailExcl = req.body.taxexcluded;
+  // pricedata.RetailIncl = req.body.taxincluded;
+  // pricedata.priceGroup = req.body.taxrule;
+  // select1 = await pricedata.save();
+  console.log("select1-------------->>>", req.body);
   const brand = new CatlogProduct({
     prodname: req.body.prodname,
     user: req.user._id,
@@ -88,7 +88,7 @@ catProductRouter.post("/", isAuth, async (req, res) => {
     depth: req.body.depth,
     weight: req.body.weight,
   });
-  // console.log("featurestypevalue========>",featurestypevalue)
+  console.log("featurestypevalue========>",brand)
 
   const brandSaved = await brand.save();
   res.send({ message: "Product Created", product: brandSaved });

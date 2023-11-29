@@ -8,6 +8,7 @@ const ProdPricingRouter = express.Router();
 ProdPricingRouter.post(
   '/Pricing',
   expressAsyncHandler(async (req, res) => {
+    console.log("req.body",req.body);
     const id = req.body.priceGroup;
     const TaxesDetailsSave = await TaxesModel.findById({
       _id: id,
