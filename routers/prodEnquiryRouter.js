@@ -2,6 +2,7 @@ import express from 'express';
 import expressAsyncHandler from 'express-async-handler';
 import ProdEnquiry from '../Models/prodEnquiryModel.js';
 import NotificationProduct from '../Models/notificationModel.js';
+import nodemailer from "nodemailer";
 
 const productEnquiryRouter = express.Router();
 
@@ -45,7 +46,6 @@ productEnquiryRouter.get(
 productEnquiryRouter.delete(
   "/clear",
   expressAsyncHandler(async (req, res) => {
-    console.log("req========>>", req)
     const deletId = req.body;
     let deleteemploye;
     for (let i = 0; i < deletId.length; i++) {
