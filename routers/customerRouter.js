@@ -122,4 +122,17 @@ customerAddressRouter.put(
   })
 );
 
+customerAddressRouter.delete(
+  "/addresmasterdelete/:id",
+  expressAsyncHandler(async (req, res) => {
+    const deletId = req.body.id;
+    let deleteemploye;
+    for (let i = 0; i < deletId.length; i++) {
+      const deleteEmploye = await CustomAddress.findById({ _id: deletId[i] });
+      deleteemploye = await deleteEmploye.remove();
+    }
+    res.send({ message: "CustomerAddress Deleted", deleteAtt: deleteemploye });
+  })
+);
+
 export default customerAddressRouter;
