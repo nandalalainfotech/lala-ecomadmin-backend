@@ -1,6 +1,7 @@
 import express from "express";
 import RegisterModel from "../Models/RegisterModel.js";
 import expressAsyncHandler from "express-async-handler";
+import CustomAddress from "../Models/customerAddressModel.js";
 
 const RegisterRouter = express.Router();
 
@@ -8,7 +9,7 @@ RegisterRouter.post(
   "/saveddetails",
   expressAsyncHandler(async (req, res) => {
     // console.log(req);
-    const registerDetails = RegisterModel({
+    const registerDetails = CustomAddress({
       fname: req.body.fname,
       // lname: req.body.lname,
       //   cname: req.body.cname,
