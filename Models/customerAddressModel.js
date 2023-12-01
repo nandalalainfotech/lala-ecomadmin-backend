@@ -1,30 +1,29 @@
-import mongoose from 'mongoose';
+import mongoose from "mongoose";
 
 const customerAddressSchema = new mongoose.Schema(
-  
-    {
-      custEmail: { type: String, required: true },
-      identificationNo: { type: String, required: true },
-      addresAlias: { type: String, required: true },
-      fname: { type: String, required: true },
-      lname: { type: String, required: true },
-      company: { type: String, required: true },
-      vatNo: { type: String, required: true },
-      address: { type: String, required: true },
-      Addres2: { type: String, required: true },
-      zip: { type: String, required: true },
-      city: { type: String, required: true },
-      country: { type: String, required: true },
-      phone: { type: String, required: true },
-      mobile: { type: String, required: true },
-      other: { type: String, required: true },
-    },
-    {
-      timestamps: true,
-    },
-  
-  );
-  
-  const CustomAddress = mongoose.model('CustomAddress', customerAddressSchema);
-  
-  export default CustomAddress;
+  {
+    custEmail: { type: String, required: false },
+    identificationNo: { type: String, required: false },
+    addresAlias: { type: String, required: false },
+    fname: { type: String, required: false },
+    lname: { type: String, required: false },
+    company: { type: String, required: false },
+    vatNo: { type: String, required: false },
+    address: { type: String, required: false },
+    Addres2: { type: String, required: false },
+    zip: { type: String, required: false },
+    city: { type: String, required: false },
+    country: { type: String, required: false },
+    phone: { type: String, required: false },
+    mobile: { type: String, required: false },
+    other: { type: String, required: false },
+    status: { type: Boolean, default: false },
+  },
+  {
+    timestamps: true,
+  }
+);
+
+const CustomAddress = mongoose.model("CustomAddress", customerAddressSchema);
+
+export default CustomAddress;
