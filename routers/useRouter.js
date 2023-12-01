@@ -7,6 +7,7 @@ import dotenv from 'dotenv';
 import { generateToken, isAuth, isAdmin } from '../utils.js';
 import sgMail from '@sendgrid/mail';
 import otpGenerator from 'otp-generator';
+import EmployeDetails from '../Models/EmployeeDetails.js';
 
 // var SENDGRID_API_KEY = '';
 // sgMail.setApiKey(SENDGRID_API_KEY)
@@ -14,7 +15,7 @@ const userRouter = express.Router();
 
 userRouter.get(
     '/top-sellers',
-    expressAsyncHandler(async(req, res) => {
+    expressAsyncHandler(async (req, res) => {
         const topSellers = await User.find({ isSeller: true })
             .sort({ 'seller.rating': -1 })
             .limit(3);
@@ -23,7 +24,7 @@ userRouter.get(
     })
 );
 
-userRouter.get('/seed', expressAsyncHandler(async(req, res) => {
+userRouter.get('/seed', expressAsyncHandler(async (req, res) => {
     // await User.remove({});
     const createdUsers = await User.insertMany(data.users);
     res.send({ createdUsers });
@@ -31,17 +32,20 @@ userRouter.get('/seed', expressAsyncHandler(async(req, res) => {
 
 userRouter.post(
     '/signin',
-    expressAsyncHandler(async(req, res) => {
-        const user = await User.findOne({ email: req.body.email});
+    expressAsyncHandler(async (req, res) => {
+        const user = await EmployeDetails.findOne({ email: req.body.email });
         if (user) {
             if (bcrypt.compareSync(req.body.password, user.password)) {
                 res.send({
                     _id: user._id,
-                    name: user.name,
+                    firstname: user.firstname,
+                    lastname: user.lastname,
                     email: user.email,
-                    status: user.status,
-                    isAdmin: user.isAdmin,
-                    isSeller: user.isSeller,
+                    mobile: user.mobile,
+                    profile: user.profile,
+                    // status: user.status,
+                    // isAdmin: user.isAdmin,
+                    // isSeller: user.isSeller,
                     token: generateToken(user),
                 });
                 return;
@@ -53,7 +57,7 @@ userRouter.post(
 
 userRouter.post(
     '/accountin',
-    expressAsyncHandler(async(req, res) => {
+    expressAsyncHandler(async (req, res) => {
         const accountin = await User.findOne({ email: req.body.email });
         if (accountin) {
             if (bcrypt.compareSync(req.body.password, accountin.password)) {
@@ -74,7 +78,7 @@ userRouter.post(
 
 userRouter.post(
     '/accountcreation',
-    expressAsyncHandler(async(req, res) => {
+    expressAsyncHandler(async (req, res) => {
         const accountcreation = await User.findOne({ email: req.body.email });
         if (User) {
             if (bcrypt.compareSync(req.body.password, accountcreation.password)) {
@@ -95,7 +99,7 @@ userRouter.post(
 
 userRouter.post(
     '/adminin',
-    expressAsyncHandler(async(req, res) => {
+    expressAsyncHandler(async (req, res) => {
         const adminin = await User.findOne({ email: req.body.email });
         if (adminin) {
             if (bcrypt.compareSync(req.body.password, adminin.password)) {
@@ -114,24 +118,24 @@ userRouter.post(
     })
 );
 
-userRouter.post('/register',expressAsyncHandler(async(req, res) => {
-        
+userRouter.post('/register', expressAsyncHandler(async (req, res) => {
 
-       const user = new User({
-            name: req.body.name,
-            email: req.body.email,
-            password: bcrypt.hashSync(req.body.password, 8),
-        });
-        const registerUser = await user.save();
-        res.send({
-            _id: registerUser._id,
-            name: registerUser.name,
-            email: registerUser.email,
-            isAdmin: registerUser.isAdmin,
-            isSeller: user.isSeller,
-            token: generateToken(registerUser),
-        });
-    })
+
+    const user = new User({
+        name: req.body.name,
+        email: req.body.email,
+        password: bcrypt.hashSync(req.body.password, 8),
+    });
+    const registerUser = await user.save();
+    res.send({
+        _id: registerUser._id,
+        name: registerUser.name,
+        email: registerUser.email,
+        isAdmin: registerUser.isAdmin,
+        isSeller: user.isSeller,
+        token: generateToken(registerUser),
+    });
+})
 );
 
 // userRouter.post(
@@ -179,7 +183,7 @@ userRouter.post('/register',expressAsyncHandler(async(req, res) => {
 
 userRouter.post(
     '/adminin',
-    expressAsyncHandler(async(req, res) => {
+    expressAsyncHandler(async (req, res) => {
         const admin = await User.findOne({ email: req.body.email });
         if (admin) {
             if (bcrypt.compareSync(req.body.password, admin.password)) {
@@ -199,7 +203,7 @@ userRouter.post(
 );
 userRouter.get(
     '/:id',
-    expressAsyncHandler(async(req, res) => {
+    expressAsyncHandler(async (req, res) => {
         const user = await User.findById(req.params.id);
         if (user) {
             res.send(user);
@@ -212,7 +216,7 @@ userRouter.get(
 userRouter.put(
     '/profile',
     isAuth,
-    expressAsyncHandler(async(req, res) => {
+    expressAsyncHandler(async (req, res) => {
         const user = await User.findById(req.user._id);
         if (user) {
             user.name = req.body.name || user.name;
@@ -246,7 +250,7 @@ userRouter.get(
     '/',
     isAuth,
     isAdmin,
-    expressAsyncHandler(async(req, res) => {
+    expressAsyncHandler(async (req, res) => {
         const users = await User.find({});
         res.send(users);
     })
@@ -256,7 +260,7 @@ userRouter.get(
     '/',
     isAuth,
     isAdmin,
-    expressAsyncHandler(async(req, res) => {
+    expressAsyncHandler(async (req, res) => {
         const accountin = await User.find({});
         res.send(accountin);
     })
@@ -266,7 +270,7 @@ userRouter.delete(
     '/:id',
     isAuth,
     isAdmin,
-    expressAsyncHandler(async(req, res) => {
+    expressAsyncHandler(async (req, res) => {
         const user = await User.findById(req.params.id);
         if (user) {
             if (user.email === 'admin@example.com') {
@@ -285,7 +289,7 @@ userRouter.put(
     '/:id',
     isAuth,
     isAdmin,
-    expressAsyncHandler(async(req, res) => {
+    expressAsyncHandler(async (req, res) => {
         const user = await User.findById(req.params.id);
         if (user) {
             user.name = req.body.name || user.name;
@@ -305,17 +309,17 @@ userRouter.put(
 );
 
 
-userRouter.put('/status/:id',isAuth,expressAsyncHandler(async(req, res) => {
+userRouter.put('/status/:id', isAuth, expressAsyncHandler(async (req, res) => {
     const userId = req.params.id;
     const statusUpdate = await User.findById(userId);
     if (statusUpdate) {
         statusUpdate.status = "Otp-Verified";
         const updatedStatus = await statusUpdate.save();
         res.send({ message: "Status Updated", statusUpdate: updatedStatus });
-      } else {
+    } else {
         res.status(404).send({ message: "Product Not Found" });
-      }
-    })
+    }
+})
 );
 
 

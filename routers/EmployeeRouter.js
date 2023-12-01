@@ -2,7 +2,8 @@ import express from "express";
 import expressAsyncHandler from "express-async-handler";
 import EmployeDetails from "../Models/EmployeeDetails.js";
 import EmployeProfile from "../Models/EmployeeModel.js";
-import { isAdmin, isAuth, isSeller, isSellerOrAdmin } from "../utils.js";
+import { generateToken, isAdmin, isAuth, isSeller, isSellerOrAdmin } from "../utils.js";
+import bcrypt from 'bcryptjs';
 
 const EmployeeRouter = express.Router();
 
@@ -47,24 +48,28 @@ EmployeeRouter.post(
 
 EmployeeRouter.post(
   "/employee",
-  isAuth,
-  isSeller,
-  isAdmin,
-  isSellerOrAdmin,
   expressAsyncHandler(async (req, res) => {
     const employedetail = new EmployeDetails({
       firstname: req.body.firstname,
       lastname: req.body.lastname,
       email: req.body.email,
       mobile: req.body.mobile,
+      password: bcrypt.hashSync(req.body.password, 8),
       profile: req.body.EmpProfile,
       active: req.body.active,
     });
     const createdProfile = await employedetail.save();
-    res.send({ message: "Product Created", category: createdProfile });
+    res.send({
+      _id: createdProfile._id,
+      firstname: createdProfile.firstname,
+      lastname: createdProfile.lastname,
+      email: createdProfile.email,
+      mobile: createdProfile.mobile,
+      password: createdProfile.password,
+      token: generateToken(createdProfile),
+    });
   })
 );
-
 EmployeeRouter.put(
   "/updatemplee/:id",
   isAuth,
