@@ -68,7 +68,8 @@ GatewayRouter.post(
   "/pay-order",
   expressAsyncHandler(async (req, res) => {
     let usermail = req.body.email;
-    // console.log(req);
+    console.log("req---------------->", req);
+    console.log("res----------->", res);
     try {
       const {
         amount,
@@ -105,6 +106,12 @@ GatewayRouter.post(
         to: usermail,
         subject: "Payment Success",
         text: "Your Payment was Successfull",
+        attachments : [
+          {
+            __filename:"sample.pdf",
+            path: "./image/sample.pdf",
+          }
+        ]
       };
 
       transporter.sendMail(mailOptions, function (error, info) {
