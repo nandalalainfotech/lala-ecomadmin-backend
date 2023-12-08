@@ -325,20 +325,23 @@ catProductRouter.post("/combination", isAuth, async (req, res) => {
 });
 
 catProductRouter.put(
-  "/stockcombination/:id",
-  isAuth,
+  "/stockcombination/:stockdata",
   expressAsyncHandler(async (req, res) => {
-    const catStockId = req.body.StockId;
+    const catStockId = req.body;
+    
+   
 
     let updatedCatStock;
-    for (let i = 0; i < catStockId.length; i++) {
+    for (let i = 0; i < catStockId?.length; i++) {
       const catStockUpdate = await Combinationchild.findById({
-        _id: catStockId[i],
+        _id: catStockId[i].id,
       });
 
       if (catStockUpdate) {
-        catStockUpdate.comstock = req.body.Stock[i];
+        console.log("updatedCatStock---------->11111",catStockUpdate);
+        catStockUpdate.comstock = catStockId[i].val;
         updatedCatStock = await catStockUpdate.save();
+        
       }
     }
     res.send({
