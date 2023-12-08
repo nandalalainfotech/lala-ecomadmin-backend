@@ -55,7 +55,9 @@ OrderrRouter.put("/assignstatus/:id", isAuth, async (req, res) => {
     if (citymaster) {
       citymaster.Status = req.body.checkedshow;
       updatecitymaster = await citymaster.save();
+      
     }
+    
     if (citymaster) {
       var transporter = nodemailer.createTransport({
         host: "smtp.gmail.com",
@@ -71,11 +73,11 @@ OrderrRouter.put("/assignstatus/:id", isAuth, async (req, res) => {
         from: process.env.SENDER_EMAIL,
         to: statusmailid,
         subject: "Order Status Change",
-        html: `<div><h1>Hi ${statususer},</h1><h2>Your order status hs been changed to ${statusmaster}</h2><h2></br></br></h2>
+        html: `<div><h1>Hi ${statususer},</h1><h2 style="background-color:powderblue;">Your order is ${statusmaster}.</h2><h2></br></br></h2>
       </div>`,
       };
       transporter.sendMail(mailOptions, function (error, info) {
-        console.log("mailOptions", mailOptions);
+       
         if (error) {
           console.log(error);
         } else {

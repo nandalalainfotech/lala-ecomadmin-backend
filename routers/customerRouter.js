@@ -38,7 +38,7 @@ customerAddressRouter.post(
 customerAddressRouter.get(
   "/customerAddList",
   expressAsyncHandler(async (req, res) => {
-    const custAddList = await CustomAddress.find();
+    const custAddList = await CustomAddress.find().sort({ createdAt: -1 });
     if (custAddList) {
       res.send(custAddList);
     } else {
