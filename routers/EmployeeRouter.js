@@ -2,8 +2,14 @@ import express from "express";
 import expressAsyncHandler from "express-async-handler";
 import EmployeDetails from "../Models/EmployeeDetails.js";
 import EmployeProfile from "../Models/EmployeeModel.js";
-import { generateToken, isAdmin, isAuth, isSeller, isSellerOrAdmin } from "../utils.js";
-import bcrypt from 'bcryptjs';
+import {
+  generateToken,
+  isAdmin,
+  isAuth,
+  isSeller,
+  isSellerOrAdmin,
+} from "../utils.js";
+import bcrypt from "bcryptjs";
 
 const EmployeeRouter = express.Router();
 
@@ -34,9 +40,9 @@ EmployeeRouter.get(
 EmployeeRouter.post(
   "/",
   isAuth,
-  isSeller,
-  isAdmin,
-  isSellerOrAdmin,
+  // isSeller,
+  // isAdmin,
+  // isSellerOrAdmin,
   expressAsyncHandler(async (req, res) => {
     const Profile = new EmployeProfile({
       empprofile: req.body.EmpProfile,
@@ -73,11 +79,11 @@ EmployeeRouter.post(
 EmployeeRouter.put(
   "/updatemplee/:id",
   isAuth,
-  isSeller,
-  isAdmin,
-  isSellerOrAdmin,
+  // isSeller,
+  // isAdmin,
+  // isSellerOrAdmin,
   expressAsyncHandler(async (req, res) => {
-    console.log("req--------->", req)
+    console.log("req--------->", req);
     const Id = req.params.id;
     const employeeupdate = await EmployeDetails.findById(Id);
     if (employeeupdate) {
@@ -111,9 +117,9 @@ EmployeeRouter.delete(
 EmployeeRouter.put(
   "/updatprofile/:id",
   isAuth,
-  isSeller,
-  isAdmin,
-  isSellerOrAdmin,
+  // isSeller,
+  // isAdmin,
+  // isSellerOrAdmin,
   expressAsyncHandler(async (req, res) => {
     const Id = req.params.id;
     const profileupdate = await EmployeProfile.findById(Id);
@@ -156,9 +162,9 @@ EmployeeRouter.delete(
 EmployeeRouter.put(
   "/attactive/:id",
   isAuth,
-  isAdmin,
-  isSeller,
-  async (req, res) => {
+  // isAdmin,
+  // isSeller,
+  expressAsyncHandler(async (req, res) => {
     const attributeId = req.body.checkboxId;
     let updatecAtt = [];
     for (let i = 0; i < attributeId.length; i++) {
@@ -176,15 +182,15 @@ EmployeeRouter.put(
       }
     }
     res.send({ message: "Category Updated", Attmaster: updatecAtt });
-  }
+  })
 );
 
 EmployeeRouter.put(
   "/updateEnable/:id",
   isAuth,
-  isAdmin,
-  isSeller,
-  async (req, res) => {
+  // isAdmin,
+  // isSeller,
+  expressAsyncHandler(async (req, res) => {
     const attributeId = req.body.id;
 
     const Attributemaster = await EmployeDetails.findById({ _id: attributeId });
@@ -200,11 +206,7 @@ EmployeeRouter.put(
     }
 
     // res.send({ message: "Category Updated", Attmaster: updatecAtt });
-  }
+  })
 );
-
-
-
-
 
 export default EmployeeRouter;

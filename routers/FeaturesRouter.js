@@ -21,9 +21,9 @@ FeaturesRouter.get(
 FeaturesRouter.put(
   "/:id",
   isAuth,
-  isSeller,
-  isAdmin,
-  isSellerOrAdmin,
+  // isSeller,
+  // isAdmin,
+  // isSellerOrAdmin,
   expressAsyncHandler(async (req, res) => {
     const FeaturesId = req.params.id;
     const Featuresupdate = await Features.findById(FeaturesId);
@@ -40,9 +40,9 @@ FeaturesRouter.put(
 FeaturesRouter.post(
   "/",
   isAuth,
-  isSeller,
-  isAdmin,
-  isSellerOrAdmin,
+  // isSeller,
+  // isAdmin,
+  // isSellerOrAdmin,
   expressAsyncHandler(async (req, res) => {
     const feature = new Features({
       featurename: req.body.Featurename,
@@ -68,9 +68,9 @@ FeaturesRouter.delete(
 FeaturesRouter.put(
   "/featureactive/:id",
   isAuth,
-  isAdmin,
-  isSeller,
-  async (req, res) => {
+  // isAdmin,
+  // isSeller,
+  expressAsyncHandler(async (req, res) => {
     const attributeId = req.body.checkboxId;
     let updatecAtt = [];
     for (let i = 0; i < attributeId.length; i++) {
@@ -86,15 +86,15 @@ FeaturesRouter.put(
       }
     }
     res.send({ message: "Category Updated", Attmaster: updatecAtt });
-  }
+  })
 );
 
 FeaturesRouter.put(
   "/featureEnable/:id",
   isAuth,
-  isAdmin,
-  isSeller,
-  async (req, res) => {
+  // isAdmin,
+  // isSeller,
+  expressAsyncHandler(async (req, res) => {
     const attributeId = req.body.id;
 
     const Attributemaster = await Features.findById({ _id: attributeId });
@@ -110,7 +110,7 @@ FeaturesRouter.put(
     }
 
     // res.send({ message: "Category Updated", Attmaster: updatecAtt });
-  }
+  })
 );
 
 FeaturesRouter.delete(

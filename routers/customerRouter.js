@@ -135,4 +135,25 @@ customerAddressRouter.delete(
   })
 );
 
+customerAddressRouter.put(
+  "/customeraddressupdateEnables/:id",
+  isAuth,
+  expressAsyncHandler(async (req, res) => {
+    const attributeId = req.body.id;
+    console.log("attributeId====>", attributeId);
+    const Attributemaster = await CustomAddress.findById({ _id: attributeId });
+
+    if (Attributemaster) {
+      if (req.body.active === true) {
+        Attributemaster.status = req.body.active;
+      } else {
+        Attributemaster.status = req.body.deactive;
+      }
+      const updatecAtt = await Attributemaster.save();
+      res.send({ message: "Category Updated", Attmaster: updatecAtt });
+    }
+    console.log("updatecAtt====>", updatecAtt);
+    // res.send({ message: "Category Updated", Attmaster: updatecAtt });
+  })
+);
 export default customerAddressRouter;
