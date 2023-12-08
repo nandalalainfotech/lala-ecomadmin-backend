@@ -28,7 +28,6 @@ catProductRouter.get("/combinationchild", async (req, res) => {
 });
 
 catProductRouter.post("/", isAuth, async (req, res) => {
-
   // console.log("req-------------->>>", req);
   // let featureId = [];
   // let featurestypevalue = [];
@@ -88,7 +87,7 @@ catProductRouter.post("/", isAuth, async (req, res) => {
     depth: req.body.depth,
     weight: req.body.weight,
   });
-  console.log("featurestypevalue========>",brand)
+  console.log("featurestypevalue========>", brand);
 
   const brandSaved = await brand.save();
   res.send({ message: "Product Created", product: brandSaved });
@@ -115,7 +114,7 @@ catProductRouter.get(
     } else {
       res.status(404).send({ message: "Quantity details Not Found" });
     }
-  }),
+  })
 );
 
 catProductRouter.get(
@@ -133,16 +132,15 @@ catProductRouter.get(
 catProductRouter.put(
   "/:id",
   isAuth,
-  isSeller,
-  isAdmin,
-  isSellerOrAdmin,
+  // isSeller,
+  // isAdmin,
+  // isSellerOrAdmin,
   expressAsyncHandler(async (req, res) => {
-
     // console.log('req------------->>>>', req);
     let object1 = req.body.quanId;
     let select;
     const qtydata = await ProductQtyModel.findById({ _id: object1[0] });
-    qtydata.Qty = req.body.quantity
+    qtydata.Qty = req.body.quantity;
     select = await qtydata.save();
 
     // console.log('select------------->>>>', select);
@@ -211,9 +209,9 @@ catProductRouter.get(
 catProductRouter.put(
   "/wishlist/:id",
   isAuth,
-  isSeller,
-  isAdmin,
-  isSellerOrAdmin,
+  // isSeller,
+  // isAdmin,
+  // isSellerOrAdmin,
   expressAsyncHandler(async (req, res) => {
     const catProdId = req.params.id;
     const catProdUpdate = await CatlogProduct.findById(catProdId);
@@ -387,9 +385,7 @@ catProductRouter.delete(
 catProductRouter.put(
   "/attactive/:id",
   isAuth,
-  isAdmin,
-  isSeller,
-  async (req, res) => {
+  expressAsyncHandler(async (req, res) => {
     const attributeId = req.body.checkboxId;
     let updatecAtt = [];
     for (let i = 0; i < attributeId.length; i++) {
@@ -407,17 +403,14 @@ catProductRouter.put(
       }
     }
     res.send({ message: "Category Updated", Attmaster: updatecAtt });
-  }
+  })
 );
 
 catProductRouter.put(
   "/updateEnables/:id",
   isAuth,
-  isAdmin,
-  isSeller,
-  async (req, res) => {
+  expressAsyncHandler(async (req, res) => {
     const attributeId = req.body.id;
-
     const Attributemaster = await CatlogProduct.findById({ _id: attributeId });
 
     if (Attributemaster) {
@@ -431,7 +424,7 @@ catProductRouter.put(
     }
 
     // res.send({ message: "Category Updated", Attmaster: updatecAtt });
-  }
+  })
 );
 
 catProductRouter.delete(

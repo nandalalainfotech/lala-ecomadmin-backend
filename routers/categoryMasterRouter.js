@@ -504,7 +504,6 @@ import FourthCategoryMaster from "../Models/categoryFourthModel.js";
 //   })
 // );
 
-
 categoryMasterRouter.post(
   "/",
   isAuth,
@@ -677,7 +676,6 @@ categoryMasterRouter.post(
   }
 );
 
-
 categoryMasterRouter.get(
   "/categoryMasterSideList",
   expressAsyncHandler(async (req, res) => {
@@ -693,8 +691,8 @@ categoryMasterRouter.get(
 categoryMasterRouter.delete(
   "/:id",
   isAuth,
-  isAdmin,
-  isSeller,
+  // isAdmin,
+  // isSeller,
   expressAsyncHandler(async (req, res) => {
     const categoryobj = await CategoryMaster.findById(req.params.id);
     if (categoryobj) {
@@ -709,11 +707,11 @@ categoryMasterRouter.delete(
 categoryMasterRouter.put(
   "/master/:id",
   isAuth,
-  isAdmin,
-  isSeller,
+  // isAdmin,
+  // isSeller,
   upload.single("coverimg"),
+  expressAsyncHandler(
   async (req, res) => {
-
     if (req.body.Cname == "Parent") {
       const categoryobj = await CategoryMaster.findById(req.body.id);
       categoryobj.name = req.body.name;
@@ -765,33 +763,33 @@ categoryMasterRouter.put(
         {
           $set: {
             ["children." +
-              child1 +
-              ".children." +
-              child2 +
-              ".children." +
-              child3 +
-              ".name"]: req.body.name,
+            child1 +
+            ".children." +
+            child2 +
+            ".children." +
+            child3 +
+            ".name"]: req.body.name,
             ["children." +
-              child1 +
-              ".children." +
-              child2 +
-              ".children." +
-              child3 +
-              ".checked"]: req.body.checked,
+            child1 +
+            ".children." +
+            child2 +
+            ".children." +
+            child3 +
+            ".checked"]: req.body.checked,
             ["children." +
-              child1 +
-              ".children." +
-              child2 +
-              ".children." +
-              child3 +
-              ".description"]: req.body.description,
+            child1 +
+            ".children." +
+            child2 +
+            ".children." +
+            child3 +
+            ".description"]: req.body.description,
             ["children." +
-              child1 +
-              ".children." +
-              child2 +
-              ".children." +
-              child3 +
-              ".parent"]: req.body.parent,
+            child1 +
+            ".children." +
+            child2 +
+            ".children." +
+            child3 +
+            ".parent"]: req.body.parent,
           },
         }
       );
@@ -806,41 +804,41 @@ categoryMasterRouter.put(
         {
           $set: {
             ["children." +
-              child1 +
-              ".children." +
-              child2 +
-              ".children." +
-              child3 +
-              ".children." +
-              child4 +
-              ".name"]: req.body.name,
+            child1 +
+            ".children." +
+            child2 +
+            ".children." +
+            child3 +
+            ".children." +
+            child4 +
+            ".name"]: req.body.name,
             ["children." +
-              child1 +
-              ".children." +
-              child2 +
-              ".children." +
-              child3 +
-              ".children." +
-              child4 +
-              ".checked"]: req.body.checked,
+            child1 +
+            ".children." +
+            child2 +
+            ".children." +
+            child3 +
+            ".children." +
+            child4 +
+            ".checked"]: req.body.checked,
             ["children." +
-              child1 +
-              ".children." +
-              child2 +
-              ".children." +
-              child3 +
-              ".children." +
-              child4 +
-              ".description"]: req.body.description,
+            child1 +
+            ".children." +
+            child2 +
+            ".children." +
+            child3 +
+            ".children." +
+            child4 +
+            ".description"]: req.body.description,
             ["children." +
-              child1 +
-              ".children." +
-              child2 +
-              ".children." +
-              child3 +
-              ".children." +
-              child4 +
-              ".parent"]: req.body.parent,
+            child1 +
+            ".children." +
+            child2 +
+            ".children." +
+            child3 +
+            ".children." +
+            child4 +
+            ".parent"]: req.body.parent,
           },
         }
       );
@@ -856,49 +854,49 @@ categoryMasterRouter.put(
         {
           $set: {
             ["children." +
-              child1 +
-              ".children." +
-              child2 +
-              ".children." +
-              child3 +
-              ".children." +
-              child4 +
-              ".children." +
-              child5 +
-              ".name"]: req.body.name,
+            child1 +
+            ".children." +
+            child2 +
+            ".children." +
+            child3 +
+            ".children." +
+            child4 +
+            ".children." +
+            child5 +
+            ".name"]: req.body.name,
             ["children." +
-              child1 +
-              ".children." +
-              child2 +
-              ".children." +
-              child3 +
-              ".children." +
-              child4 +
-              ".children." +
-              child5 +
-              ".checked"]: req.body.checked,
+            child1 +
+            ".children." +
+            child2 +
+            ".children." +
+            child3 +
+            ".children." +
+            child4 +
+            ".children." +
+            child5 +
+            ".checked"]: req.body.checked,
             ["children." +
-              child1 +
-              ".children." +
-              child2 +
-              ".children." +
-              child3 +
-              ".children." +
-              child4 +
-              ".children." +
-              child5 +
-              ".description"]: req.body.description,
+            child1 +
+            ".children." +
+            child2 +
+            ".children." +
+            child3 +
+            ".children." +
+            child4 +
+            ".children." +
+            child5 +
+            ".description"]: req.body.description,
             ["children." +
-              child1 +
-              ".children." +
-              child2 +
-              ".children." +
-              child3 +
-              ".children." +
-              child4 +
-              ".children." +
-              child5 +
-              ".parent"]: req.body.parent,
+            child1 +
+            ".children." +
+            child2 +
+            ".children." +
+            child3 +
+            ".children." +
+            child4 +
+            ".children." +
+            child5 +
+            ".parent"]: req.body.parent,
           },
         }
       );
@@ -915,57 +913,57 @@ categoryMasterRouter.put(
         {
           $set: {
             ["children." +
-              child1 +
-              ".children." +
-              child2 +
-              ".children." +
-              child3 +
-              ".children." +
-              child4 +
-              ".children." +
-              child5 +
-              ".children." +
-              child6 +
-              ".name"]: req.body.name,
+            child1 +
+            ".children." +
+            child2 +
+            ".children." +
+            child3 +
+            ".children." +
+            child4 +
+            ".children." +
+            child5 +
+            ".children." +
+            child6 +
+            ".name"]: req.body.name,
             ["children." +
-              child1 +
-              ".children." +
-              child2 +
-              ".children." +
-              child3 +
-              ".children." +
-              child4 +
-              ".children." +
-              child5 +
-              ".children." +
-              child6 +
-              ".checked"]: req.body.checked,
+            child1 +
+            ".children." +
+            child2 +
+            ".children." +
+            child3 +
+            ".children." +
+            child4 +
+            ".children." +
+            child5 +
+            ".children." +
+            child6 +
+            ".checked"]: req.body.checked,
             ["children." +
-              child1 +
-              ".children." +
-              child2 +
-              ".children." +
-              child3 +
-              ".children." +
-              child4 +
-              ".children." +
-              child5 +
-              ".children." +
-              child6 +
-              ".description"]: req.body.description,
+            child1 +
+            ".children." +
+            child2 +
+            ".children." +
+            child3 +
+            ".children." +
+            child4 +
+            ".children." +
+            child5 +
+            ".children." +
+            child6 +
+            ".description"]: req.body.description,
             ["children." +
-              child1 +
-              ".children." +
-              child2 +
-              ".children." +
-              child3 +
-              ".children." +
-              child4 +
-              ".children." +
-              child5 +
-              ".children." +
-              child6 +
-              ".parent"]: req.body.parent,
+            child1 +
+            ".children." +
+            child2 +
+            ".children." +
+            child3 +
+            ".children." +
+            child4 +
+            ".children." +
+            child5 +
+            ".children." +
+            child6 +
+            ".parent"]: req.body.parent,
           },
         }
       );
@@ -983,65 +981,65 @@ categoryMasterRouter.put(
         {
           $set: {
             ["children." +
-              child1 +
-              ".children." +
-              child2 +
-              ".children." +
-              child3 +
-              ".children." +
-              child4 +
-              ".children." +
-              child5 +
-              ".children." +
-              child6 +
-              ".children." +
-              child7 +
-              ".name"]: req.body.name,
+            child1 +
+            ".children." +
+            child2 +
+            ".children." +
+            child3 +
+            ".children." +
+            child4 +
+            ".children." +
+            child5 +
+            ".children." +
+            child6 +
+            ".children." +
+            child7 +
+            ".name"]: req.body.name,
             ["children." +
-              child1 +
-              ".children." +
-              child2 +
-              ".children." +
-              child3 +
-              ".children." +
-              child4 +
-              ".children." +
-              child5 +
-              ".children." +
-              child6 +
-              ".children." +
-              child7 +
-              ".checked"]: req.body.checked,
+            child1 +
+            ".children." +
+            child2 +
+            ".children." +
+            child3 +
+            ".children." +
+            child4 +
+            ".children." +
+            child5 +
+            ".children." +
+            child6 +
+            ".children." +
+            child7 +
+            ".checked"]: req.body.checked,
             ["children." +
-              child1 +
-              ".children." +
-              child2 +
-              ".children." +
-              child3 +
-              ".children." +
-              child4 +
-              ".children." +
-              child5 +
-              ".children." +
-              child6 +
-              ".children." +
-              child7 +
-              ".description"]: req.body.description,
+            child1 +
+            ".children." +
+            child2 +
+            ".children." +
+            child3 +
+            ".children." +
+            child4 +
+            ".children." +
+            child5 +
+            ".children." +
+            child6 +
+            ".children." +
+            child7 +
+            ".description"]: req.body.description,
             ["children." +
-              child1 +
-              ".children." +
-              child2 +
-              ".children." +
-              child3 +
-              ".children." +
-              child4 +
-              ".children." +
-              child5 +
-              ".children." +
-              child6 +
-              ".children." +
-              child7 +
-              ".parent"]: req.body.parent,
+            child1 +
+            ".children." +
+            child2 +
+            ".children." +
+            child3 +
+            ".children." +
+            child4 +
+            ".children." +
+            child5 +
+            ".children." +
+            child6 +
+            ".children." +
+            child7 +
+            ".parent"]: req.body.parent,
           },
         }
       );
@@ -1060,73 +1058,73 @@ categoryMasterRouter.put(
         {
           $set: {
             ["children." +
-              child1 +
-              ".children." +
-              child2 +
-              ".children." +
-              child3 +
-              ".children." +
-              child4 +
-              ".children." +
-              child5 +
-              ".children." +
-              child6 +
-              ".children." +
-              child7 +
-              ".children." +
-              child8 +
-              ".name"]: req.body.name,
+            child1 +
+            ".children." +
+            child2 +
+            ".children." +
+            child3 +
+            ".children." +
+            child4 +
+            ".children." +
+            child5 +
+            ".children." +
+            child6 +
+            ".children." +
+            child7 +
+            ".children." +
+            child8 +
+            ".name"]: req.body.name,
             ["children." +
-              child1 +
-              ".children." +
-              child2 +
-              ".children." +
-              child3 +
-              ".children." +
-              child4 +
-              ".children." +
-              child5 +
-              ".children." +
-              child6 +
-              ".children." +
-              child7 +
-              ".children." +
-              child8 +
-              ".checked"]: req.body.checked,
+            child1 +
+            ".children." +
+            child2 +
+            ".children." +
+            child3 +
+            ".children." +
+            child4 +
+            ".children." +
+            child5 +
+            ".children." +
+            child6 +
+            ".children." +
+            child7 +
+            ".children." +
+            child8 +
+            ".checked"]: req.body.checked,
             ["children." +
-              child1 +
-              ".children." +
-              child2 +
-              ".children." +
-              child3 +
-              ".children." +
-              child4 +
-              ".children." +
-              child5 +
-              ".children." +
-              child6 +
-              ".children." +
-              child7 +
-              ".children." +
-              child8 +
-              ".description"]: req.body.description,
+            child1 +
+            ".children." +
+            child2 +
+            ".children." +
+            child3 +
+            ".children." +
+            child4 +
+            ".children." +
+            child5 +
+            ".children." +
+            child6 +
+            ".children." +
+            child7 +
+            ".children." +
+            child8 +
+            ".description"]: req.body.description,
             ["children." +
-              child1 +
-              ".children." +
-              child2 +
-              ".children." +
-              child3 +
-              ".children." +
-              child4 +
-              ".children." +
-              child5 +
-              ".children." +
-              child6 +
-              ".children." +
-              child7 +
-              ".children." +
-              child8 +
-              ".parent"]: req.body.parent,
+            child1 +
+            ".children." +
+            child2 +
+            ".children." +
+            child3 +
+            ".children." +
+            child4 +
+            ".children." +
+            child5 +
+            ".children." +
+            child6 +
+            ".children." +
+            child7 +
+            ".children." +
+            child8 +
+            ".parent"]: req.body.parent,
           },
         }
       );
@@ -1146,81 +1144,81 @@ categoryMasterRouter.put(
         {
           $set: {
             ["children." +
-              child1 +
-              ".children." +
-              child2 +
-              ".children." +
-              child3 +
-              ".children." +
-              child4 +
-              ".children." +
-              child5 +
-              ".children." +
-              child6 +
-              ".children." +
-              child7 +
-              ".children." +
-              child8 +
-              ".children." +
-              child9 +
-              ".name"]: req.body.name,
+            child1 +
+            ".children." +
+            child2 +
+            ".children." +
+            child3 +
+            ".children." +
+            child4 +
+            ".children." +
+            child5 +
+            ".children." +
+            child6 +
+            ".children." +
+            child7 +
+            ".children." +
+            child8 +
+            ".children." +
+            child9 +
+            ".name"]: req.body.name,
             ["children." +
-              child1 +
-              ".children." +
-              child2 +
-              ".children." +
-              child3 +
-              ".children." +
-              child4 +
-              ".children." +
-              child5 +
-              ".children." +
-              child6 +
-              ".children." +
-              child7 +
-              ".children." +
-              child8 +
-              ".children." +
-              child9 +
-              ".checked"]: req.body.checked,
+            child1 +
+            ".children." +
+            child2 +
+            ".children." +
+            child3 +
+            ".children." +
+            child4 +
+            ".children." +
+            child5 +
+            ".children." +
+            child6 +
+            ".children." +
+            child7 +
+            ".children." +
+            child8 +
+            ".children." +
+            child9 +
+            ".checked"]: req.body.checked,
             ["children." +
-              child1 +
-              ".children." +
-              child2 +
-              ".children." +
-              child3 +
-              ".children." +
-              child4 +
-              ".children." +
-              child5 +
-              ".children." +
-              child6 +
-              ".children." +
-              child7 +
-              ".children." +
-              child8 +
-              ".children." +
-              child9 +
-              ".description"]: req.body.description,
+            child1 +
+            ".children." +
+            child2 +
+            ".children." +
+            child3 +
+            ".children." +
+            child4 +
+            ".children." +
+            child5 +
+            ".children." +
+            child6 +
+            ".children." +
+            child7 +
+            ".children." +
+            child8 +
+            ".children." +
+            child9 +
+            ".description"]: req.body.description,
             ["children." +
-              child1 +
-              ".children." +
-              child2 +
-              ".children." +
-              child3 +
-              ".children." +
-              child4 +
-              ".children." +
-              child5 +
-              ".children." +
-              child6 +
-              ".children." +
-              child7 +
-              ".children." +
-              child8 +
-              ".children." +
-              child9 +
-              ".parent"]: req.body.parent,
+            child1 +
+            ".children." +
+            child2 +
+            ".children." +
+            child3 +
+            ".children." +
+            child4 +
+            ".children." +
+            child5 +
+            ".children." +
+            child6 +
+            ".children." +
+            child7 +
+            ".children." +
+            child8 +
+            ".children." +
+            child9 +
+            ".parent"]: req.body.parent,
           },
         }
       );
@@ -1267,15 +1265,16 @@ categoryMasterRouter.put(
     // } else {
     //   res.status(404).send({ message: "Category Not Found" });
     // }
-  }
+  })
 );
 
 categoryMasterRouter.put(
   "/child/:id",
   isAuth,
-  isAdmin,
-  isSeller,
+  // isAdmin,
+  // isSeller,
   upload.single("coverimg"),
+  expressAsyncHandler(
   async (req, res) => {
     const parentId = req.body.parent;
     const paramid = req.params.id;
@@ -1318,16 +1317,16 @@ categoryMasterRouter.put(
     } else {
       res.status(404).send({ message: "Category Not Found" });
     }
-  }
+  })
 );
 
 categoryMasterRouter.put(
   "/grandchild/:id",
   isAuth,
-  isAdmin,
-  isSeller,
+  // isAdmin,
+  // isSeller,
   upload.single("coverimg"),
-  async (req, res) => {
+  expressAsyncHandler(async (req, res) => {
     // console.log(req);
     const grandchildId = req.params.id;
     const childId = req.body.parent;
@@ -1385,7 +1384,7 @@ categoryMasterRouter.put(
         categoryGrandChildObject: ParentId,
       });
     }
-  }
+  })
 );
 
 categoryMasterRouter.get(
@@ -1486,9 +1485,9 @@ categoryMasterRouter.get(
 categoryMasterRouter.put(
   "/checkboxitem/:id",
   isAuth,
-  isAdmin,
-  isSeller,
-  async (req, res) => {
+  // isAdmin,
+  // isSeller,
+  expressAsyncHandler(async (req, res) => {
     const categorymasterId = req.body.checkboxId;
     let updatecategorymaster = [];
     for (let i = 0; i < categorymasterId.length; i++) {
@@ -1509,7 +1508,7 @@ categoryMasterRouter.put(
       message: "Category Updated",
       categorymaster: updatecategorymaster,
     });
-  }
+  })
 );
 
 categoryMasterRouter.put("/childcheckbox/:id", async (req, res) => {
@@ -1554,9 +1553,9 @@ categoryMasterRouter.put("/grandchildcheckbox/:id", async (req, res) => {
 categoryMasterRouter.put(
   "/parentEnable/:id",
   isAuth,
-  isAdmin,
-  isSeller,
-  async (req, res) => {
+  // isAdmin,
+  // isSeller,
+  expressAsyncHandler(async (req, res) => {
     const attributeId = req.body.id;
 
     const Attributemaster = await CategoryMaster.findById({ _id: attributeId });
@@ -1572,15 +1571,15 @@ categoryMasterRouter.put(
     }
 
     // res.send({ message: "Category Updated", Attmaster: updatecAtt });
-  }
+  })
 );
 
 categoryMasterRouter.put(
   "/childEnable/:id",
   isAuth,
-  isAdmin,
-  isSeller,
-  async (req, res) => {
+  // isAdmin,
+  // isSeller,
+  expressAsyncHandler(async (req, res) => {
     const attributeId = req.body.id;
 
     const Attributemaster = await subCategoryMaster.findById({
@@ -1598,15 +1597,15 @@ categoryMasterRouter.put(
     }
 
     // res.send({ message: "Category Updated", Attmaster: updatecAtt });
-  }
+  })
 );
 
 categoryMasterRouter.put(
   "/grandEnable/:id",
   isAuth,
-  isAdmin,
-  isSeller,
-  async (req, res) => {
+  // isAdmin,
+  // isSeller,
+  expressAsyncHandler(async (req, res) => {
     const attributeId = req.body.id;
 
     const Attributemaster = await ThirdCategoryMaster.findById({
@@ -1624,7 +1623,7 @@ categoryMasterRouter.put(
     }
 
     // res.send({ message: "Category Updated", Attmaster: updatecAtt });
-  }
+  })
 );
 
 categoryMasterRouter.delete(
@@ -1673,7 +1672,7 @@ categoryMasterRouter.delete(
 categoryMasterRouter.delete(
   "/Categorydelete/:id",
   expressAsyncHandler(async (req, res) => {
-    console.log('req----------------delete', req.body);
+    console.log("req----------------delete", req.body);
     // const categoryobj = await CategoryMaster.findById(req.body.parentId);
     // console.log('categoryobj----------------delete', categoryobj);
     // let deletechilddata;
@@ -1742,12 +1741,12 @@ categoryMasterRouter.delete(
             {
               $pull: {
                 ["children." +
-                  child1 +
-                  ".children." +
-                  childs2 +
-                  ".children." +
-                  childs3 +
-                  ".children"]: {
+                child1 +
+                ".children." +
+                childs2 +
+                ".children." +
+                childs3 +
+                ".children"]: {
                   _id: mongoose.Types.ObjectId(req.body.childId),
                 },
               },
@@ -1759,13 +1758,14 @@ categoryMasterRouter.delete(
             {
               $pull: {
                 ["children." +
-                  child1 +
-                  ".children." +
-                  childs2 +
-                  ".children." +
-                  childs3 +
-                  ".children." +
-                  childs4 + ".children"]: {
+                child1 +
+                ".children." +
+                childs2 +
+                ".children." +
+                childs3 +
+                ".children." +
+                childs4 +
+                ".children"]: {
                   _id: mongoose.Types.ObjectId(req.body.childId),
                 },
               },
@@ -1777,16 +1777,16 @@ categoryMasterRouter.delete(
             {
               $pull: {
                 ["children." +
-                  child1 +
-                  ".children." +
-                  childs2 +
-                  ".children." +
-                  childs3 +
-                  ".children." +
-                  childs4 +
-                  ".children." +
-                  childs5 +
-                  ".children"]: {
+                child1 +
+                ".children." +
+                childs2 +
+                ".children." +
+                childs3 +
+                ".children." +
+                childs4 +
+                ".children." +
+                childs5 +
+                ".children"]: {
                   _id: mongoose.Types.ObjectId(req.body.childId),
                 },
               },
@@ -1798,20 +1798,20 @@ categoryMasterRouter.delete(
             {
               $pull: {
                 ["children." +
-                  child1 +
-                  ".children." +
-                  childs2 +
-                  ".children." +
-                  childs3 +
-                  ".children." +
-                  childs4 +
-                  ".children." +
-                  childs5 +
-                  ".children." +
-                  childs6 +
-                  ".children." +
-                  childs7 +
-                  ".children"]: {
+                child1 +
+                ".children." +
+                childs2 +
+                ".children." +
+                childs3 +
+                ".children." +
+                childs4 +
+                ".children." +
+                childs5 +
+                ".children." +
+                childs6 +
+                ".children." +
+                childs7 +
+                ".children"]: {
                   _id: mongoose.Types.ObjectId(req.body.childId),
                 },
               },
@@ -1823,22 +1823,22 @@ categoryMasterRouter.delete(
             {
               $pull: {
                 ["children." +
-                  child1 +
-                  ".children." +
-                  childs2 +
-                  ".children." +
-                  childs3 +
-                  ".children." +
-                  childs4 +
-                  ".children." +
-                  childs5 +
-                  ".children." +
-                  childs6 +
-                  ".children." +
-                  childs7 +
-                  ".children." +
-                  childs8 +
-                  ".children"]: {
+                child1 +
+                ".children." +
+                childs2 +
+                ".children." +
+                childs3 +
+                ".children." +
+                childs4 +
+                ".children." +
+                childs5 +
+                ".children." +
+                childs6 +
+                ".children." +
+                childs7 +
+                ".children." +
+                childs8 +
+                ".children"]: {
                   _id: mongoose.Types.ObjectId(req.body.childId),
                 },
               },

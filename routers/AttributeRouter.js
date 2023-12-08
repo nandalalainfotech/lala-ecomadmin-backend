@@ -22,9 +22,9 @@ AttributeRouter.get(
 AttributeRouter.put(
   "/:id",
   isAuth,
-  isSeller,
-  isAdmin,
-  isSellerOrAdmin,
+  // isSeller,
+  // isAdmin,
+  // isSellerOrAdmin,
   expressAsyncHandler(async (req, res) => {
     const attributeId = req.params.id;
     const attributeupdate = await Attribute.findById(attributeId);
@@ -42,9 +42,9 @@ AttributeRouter.put(
 AttributeRouter.post(
   "/",
   isAuth,
-  isSeller,
-  isAdmin,
-  isSellerOrAdmin,
+  // isSeller,
+  // isAdmin,
+  // isSellerOrAdmin,
   expressAsyncHandler(async (req, res) => {
     const categorys = new Attributeall({
       nameall: req.body.name + "" + "All",
@@ -77,8 +77,9 @@ AttributeRouter.delete(
 AttributeRouter.put(
   "/attactive/:id",
   isAuth,
-  isAdmin,
-  isSeller,
+  // isAdmin,
+  // isSeller,
+  expressAsyncHandler(
   async (req, res) => {
     const attributeId = req.body.checkboxId;
     let updatecAtt = [];
@@ -95,14 +96,15 @@ AttributeRouter.put(
       }
     }
     res.send({ message: "Category Updated", Attmaster: updatecAtt });
-  }
+  })
 );
 
 AttributeRouter.put(
   "/attEnable/:id",
   isAuth,
-  isAdmin,
-  isSeller,
+  // isAdmin,
+  // isSeller,
+  expressAsyncHandler(
   async (req, res) => {
     const attributeId = req.body.id;
 
@@ -119,7 +121,7 @@ AttributeRouter.put(
     }
 
     // res.send({ message: "Category Updated", Attmaster: updatecAtt });
-  }
+  })
 );
 
 AttributeRouter.delete(
