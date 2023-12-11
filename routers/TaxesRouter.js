@@ -1,12 +1,12 @@
-import express from 'express';
-import expressAsyncHandler from 'express-async-handler';
-import TaxesModel from '../Models/TaxesModel.js';
-import { isAdmin, isAuth, isSeller } from '../utils.js';
+import express from "express";
+import expressAsyncHandler from "express-async-handler";
+import TaxesModel from "../Models/TaxesModel.js";
+import { isAdmin, isAuth, isSeller } from "../utils.js";
 
 const TaxesRouter = express.Router();
 
 TaxesRouter.get(
-  '/',
+  "/",
   expressAsyncHandler(async (req, res) => {
     const taxes = await TaxesModel.find().sort({ createdAt: -1 });
     res.send({ taxes });
@@ -14,7 +14,7 @@ TaxesRouter.get(
 );
 
 TaxesRouter.post(
-  '/taxes',
+  "/taxes",
   expressAsyncHandler(async (req, res) => {
     const TaxesDetailsSave = new TaxesModel({
       Name: req.body.Name,
@@ -22,28 +22,28 @@ TaxesRouter.post(
       checked: req.body.checked,
     });
     const createdtaxes = await TaxesDetailsSave.save();
-    res.send({ message: 'Taxes Added', category: createdtaxes });
+    res.send({ message: "Taxes Added", category: createdtaxes });
   })
 );
 
 TaxesRouter.delete(
-  '/:id',
+  "/:id",
   isAuth,
-  isAdmin,
-  isSeller,
+  // isAdmin,
+  // isSeller,
   expressAsyncHandler(async (req, res) => {
     const taxes = await TaxesModel.findById(req.params.id);
     if (taxes) {
       const deleteProduct = await taxes.remove();
-      res.send({ message: 'Taxes Deleted', taxes: deleteProduct });
+      res.send({ message: "Taxes Deleted", taxes: deleteProduct });
     } else {
-      res.status(404).send({ message: 'Taxes Not Found' });
+      res.status(404).send({ message: "Taxes Not Found" });
     }
   })
 );
 
 TaxesRouter.put(
-  '/updateTaxes/:id',
+  "/updateTaxes/:id",
 
   expressAsyncHandler(async (req, res) => {
     // console.log(req);
@@ -55,30 +55,36 @@ TaxesRouter.put(
       taxUpdate.checked = req.body.checked;
       const updatedTaxes = await taxUpdate.save();
       // console.log('updatedAttribute', updatedTaxes);
-      res.send({ message: ' Updated', taxdetail: updatedTaxes });
+      res.send({ message: " Updated", taxdetail: updatedTaxes });
     } else {
-      res.status(404).send({ message: 'Taxes Not Found' });
+      res.status(404).send({ message: "Taxes Not Found" });
     }
   })
 );
 
-TaxesRouter.put('/enable/:id', isAuth, isAdmin, isSeller, async (req, res) => {
-  const enableId = req.body.id;
+TaxesRouter.put(
+  "/enable/:id",
+  isAuth,
+  // isAdmin,
+  // isSeller,
+  expressAsyncHandler(async (req, res) => {
+    const enableId = req.body.id;
 
-  const taxEnable = await TaxesModel.findById(enableId);
+    const taxEnable = await TaxesModel.findById(enableId);
 
-  if (taxEnable) {
-    if (req.body.active === true) {
-      taxEnable.checked = req.body.active;
-    } else {
-      taxEnable.checked = req.body.deactive;
+    if (taxEnable) {
+      if (req.body.active === true) {
+        taxEnable.checked = req.body.active;
+      } else {
+        taxEnable.checked = req.body.deactive;
+      }
+      const updatecTaxEnable = await taxEnable.save();
+      res.send({ message: "Tax Enable Updated", TaxEnable: updatecTaxEnable });
     }
-    const updatecTaxEnable = await taxEnable.save();
-    res.send({ message: 'Tax Enable Updated', TaxEnable: updatecTaxEnable });
-  }
-});
+  })
+);
 
-TaxesRouter.put('/checkboxitem/:id', isAuth, async (req, res) => {
+TaxesRouter.put("/checkboxitem/:id", isAuth, async (req, res) => {
   const taxmasterId = req.body.checkboxId;
   let updatetaxmaster = [];
   for (let i = 0; i < taxmasterId.length; i++) {
@@ -95,11 +101,11 @@ TaxesRouter.put('/checkboxitem/:id', isAuth, async (req, res) => {
       updatetaxmaster = await taxesmaster.save();
     }
   }
-  res.send({ message: 'Taxes Updated', taxmaster: updatetaxmaster });
+  res.send({ message: "Taxes Updated", taxmaster: updatetaxmaster });
 });
 
 TaxesRouter.delete(
-  '/deletemultiple/:id',
+  "/deletemultiple/:id",
   expressAsyncHandler(async (req, res) => {
     const deletId = req.body.id;
     let deletetax;
@@ -107,7 +113,7 @@ TaxesRouter.delete(
       const deleteTaxes = await TaxesModel.findById({ _id: deletId[i] });
       deletetax = await deleteTaxes.remove();
     }
-    res.send({ message: 'Attributed Deleted', deleteAtt: deletetax });
+    res.send({ message: "Attributed Deleted", deleteAtt: deletetax });
   })
 );
 export default TaxesRouter;
