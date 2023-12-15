@@ -1,0 +1,301 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8" />
+    <style></style>
+</head>
+
+<body>
+    <div style="margin-left: 50px;margin-right: 50px;border: 1px solid black;padding: 30px;">
+        <table style="border: 3px; width: 100%;">
+            {{#invoice}}
+            <tbody>
+                <tr>
+                    <td colspan="1">
+                        <img src="{{this.withPrefix}}" alt="fsfsfsf" width="70px" height="70px">
+                    </td>
+
+
+                    <td colspan="10" style="
+                    text-align: center;
+                    font-size: 30px;
+                    text-transform: uppercase;
+                    font-weight: 200;
+                  ">
+                        <h2>HI {{this.dataUserName}},</h2>
+                    </td>
+                    <td colspan="1">
+
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="12" style="font-size: 24px; text-align: center;padding: 10px;">
+                        <span>THANK YOU FOR SHOPPING WITH LALA E-COMMERCE!</span>
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="12">
+                        <hr>
+                    </td>
+                </tr>
+
+                <tr style="margin-top: 30px !important;border-top: 3px;padding:10px;   border-top: 1px solid #838383;">
+                    <td colspan="5" style="font-size: 18px;padding:6px;">
+                        Order ID : {{this.dataOrder}}
+                    </td>
+                    <td colspan="4" style="font-size: 18px;padding:6px;">
+
+                    </td>
+                    <td colspan="3" style="font-size: 18px;padding:6px;text-align: right;">
+                        Payment : {{this.dataPaymentMode}}
+                    </td>
+
+                </tr>
+                <tr style="margin-top: 30px !important;border-top: 3px;padding:10px;   border-top: 1px solid #838383;">
+                    <td colspan="5" style="font-size: 18px;padding:6px;">
+                        Carrier : {{this.dataCarrier}}
+                    </td>
+                    <td colspan="4" style="font-size: 18px;padding:6px;">
+
+                    </td>
+                    <td colspan="3" style="font-size: 18px;padding:6px;text-align: right;">
+                        Date : {{this.dataTime}}
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="12">
+                        <hr>
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="4" style="margin-left: 20px; ">
+                        <span style="font-weight: bold;font-size: 22px;">Delivery Address</span>
+                        <br>
+                        <span style="font-weight: 500;font-size: 18px;padding: 5px;">{{this.dataCusFname}}</span>
+                        <br>
+                        <span style="font-weight: 500;font-size: 18px;padding: 5px;">{{this.datamobile}}</span>
+                        <br>
+                        <span style="font-weight: 500;font-size: 18px; padding: 5px;">{{this.dataCusAddress1}} ,
+                            {{this.dataCusAddress2}}</span>
+                        <br>
+                        <span style="font-weight: 500;font-size: 18px; padding: 5px;">{{this.dataCusCityName}},
+                            {{this.dataCusStatename}},</span>
+                        <br>
+                        <span style="font-weight: 500;font-size: 18px; padding: 5px;">{{this.dataCusCountryName}},
+                            {{this.dataCusZipcode}}</span>
+                    </td>
+                    <td colspan="2">
+
+                    </td>
+                    <td colspan="4" style="margin-left: 20px; ">
+                        <span style="font-size: 22px; padding: 5px;font-weight: bold;">Billing Address</span>
+                        <br> <span style="font-weight: 500;font-size: 18px;padding: 5px;">{{this.dataBillFname}}</span>
+                        <br>
+                        <span style="font-weight: 500;font-size: 18px;padding: 5px;">{{this.datamobile}}</span>
+                        <br>
+                        <span style="font-weight: 500;font-size: 18px;padding: 5px;">{{this.dataBillAddress1}} ,
+                            {{this.dataBillAddress2}}</span>
+                        <br>
+                        <span style="font-weight: 500;font-size: 18px;padding: 5px;"> {{this.dataBillCityName}},
+                            {{this.dataBillStatename}},</span>
+                        <br>
+                        <span style="font-weight: 500;font-size: 18px;padding: 5px;"> {{this.dataBillCountryName}},
+                            {{this.dataBillZipcode}}</span>
+                    </td>
+                    <td colspan="2" style=" ">
+
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="12">
+                        <hr>
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="2" style="font-size: 20px;  text-align: right;padding: 10px;">
+                        Reference
+                    </td>
+                    <td colspan="3" style="font-size: 20px;  text-align: right;padding: 10px;">
+                        Products
+                    </td>
+                    <td colspan="2" style="font-size: 20px;  text-align: right;padding: 10px;">
+                        Unit price
+                    </td>
+                    <td colspan="2" style="font-size: 20px;  text-align: right;padding: 10px;">
+                        Quantity
+                    </td>
+                    <td colspan="3" style="font-size: 20px;  text-align: right;padding: 10px;">
+                        Total Price
+                    </td>
+                </tr>
+
+
+                <tr>
+                    <td colspan="12">
+                        <hr>
+                    </td>
+                </tr>
+                {{#each productdata}}
+                <tr>
+                    <td colspan="2" style="font-size: 20px;  text-align: right;padding: 10px;">
+                        {{this.reference}}
+                    </td>
+                    <td colspan="3" style="font-size: 20px;   text-align: right;padding: 10px;">
+                        {{this.prodname}}
+                    </td>
+                    <td colspan="2" style="font-size: 20px;  text-align: right;padding: 10px;">
+                        600
+                    </td>
+                    <td colspan="2" style="font-size: 20px;  text-align: right;padding: 10px;">
+                        {{this.quantity}}
+                    </td>
+                    <td colspan="3" style="font-size: 20px;  text-align: right;padding: 10px;">
+                        300
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="12">
+                        <hr>
+                    </td>
+                </tr>
+                {{/each}}
+                <!-- <tr>
+                    <td colspan="12">
+                        <hr>
+                    </td>
+                </tr> -->
+                <tr>
+                    <td colspan="2" style="font-size: 20px;  text-align: right;padding: 10px;">
+
+                    </td>
+                    <td colspan="3" style="font-size: 20px;   text-align: right;padding: 10px;">
+
+                    </td>
+                    <td colspan="2" style="font-size: 20px;  text-align: right;padding: 10px;">
+
+                    </td>
+                    <td colspan="2" style="font-size: 20px;  text-align: right;padding: 10px;">
+                        Products
+                    </td>
+                    <td colspan="3" style="font-size: 20px;  text-align: right;padding: 10px;">
+                        {{this.dataProductTotal}}
+                    </td>
+                </tr>
+                <!-- <tr>
+                    <td colspan="12">
+                        <hr>
+                    </td>
+                </tr> -->
+                <tr>
+                    <td colspan="2" style="font-size: 20px;  text-align: right;padding: 10px;">
+
+                    </td>
+                    <td colspan="3" style="font-size: 20px;   text-align: right;padding: 10px;">
+
+                    </td>
+                    <td colspan="2" style="font-size: 20px;  text-align: right;padding: 10px;">
+
+                    </td>
+                    <td colspan="2" style="font-size: 20px;  text-align: right;padding: 10px;">
+                        Discounts
+                    </td>
+                    <td colspan="3" style="font-size: 20px;  text-align: right;padding: 10px;">
+                        0.00
+                    </td>
+                </tr>
+                <!-- <tr>
+                    <td colspan="12">
+                        <hr>
+                    </td>
+                </tr> -->
+                <tr>
+                    <td colspan="2" style="font-size: 20px;  text-align: right;padding: 10px;">
+
+                    </td>
+                    <td colspan="3" style="font-size: 20px;   text-align: right;padding: 10px;">
+
+                    </td>
+                    <td colspan="2" style="font-size: 20px;  text-align: right;padding: 10px;">
+
+                    </td>
+                    <td colspan="2" style="font-size: 20px;  text-align: right;padding: 10px;">
+                        Gift-wrapping
+                    </td>
+                    <td colspan="3" style="font-size: 20px;  text-align: right;padding: 10px;">
+                        0.00
+                    </td>
+                </tr>
+                <!-- <tr>
+                    <td colspan="12">
+                        <hr>
+                    </td>
+                </tr> -->
+                <tr>
+                    <td colspan="2" style="font-size: 20px;  text-align: right;padding: 10px;">
+
+                    </td>
+                    <td colspan="3" style="font-size: 20px;   text-align: right;padding: 10px;">
+
+                    </td>
+                    <td colspan="2" style="font-size: 20px;  text-align: right;padding: 10px;">
+
+                    </td>
+                    <td colspan="2" style="font-size: 20px;  text-align: right;padding: 10px;">
+                        Shipping
+                    </td>
+                    <td colspan="3" style="font-size: 20px;  text-align: right;padding: 10px;">
+                        {{this.dataShippingCharge}}
+                    </td>
+                </tr>
+                <!-- <tr>
+                    <td colspan="12">
+                        <hr>
+                    </td>
+                </tr> -->
+                <tr>
+                    <td colspan="2" style="font-size: 20px; text-align: right;padding: 10px;">
+
+                    </td>
+                    <td colspan="3" style="font-size: 20px;  text-align: right;padding: 10px;">
+
+                    </td>
+                    <td colspan="2" style="font-size: 20px; text-align: right;padding: 10px;">
+
+                    </td>
+                    <td colspan="2" style="font-size: 20px; text-align: right;padding: 10px;">
+                        Total Tax paid
+                    </td>
+                    <td colspan="3" style="font-size: 20px; text-align: right;padding: 10px;">
+                        {{this.taxincluded}}
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="12">
+                        <hr>
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="2" style="font-size: 20px; text-align: right;padding: 10px;">
+
+                    </td>
+                    <td colspan="3" style="font-size: 20px;  text-align: right;padding: 10px;">
+
+                    </td>
+                    <td colspan="2" style="font-size: 20px; text-align: right;padding: 10px;">
+
+                    </td>
+                    <td colspan="2" style="font-size: 20px; text-align: right;padding: 10px;">
+                        Total paid
+                    </td>
+                    <td colspan="3" style="font-size: 20px; text-align: right;padding: 10px;">
+                        {{this.dataTotal}}
+                    </td>
+                </tr>
+            </tbody>
+            {{/invoice}}
+        </table>
+    </div>
+</body>
+
+</html>

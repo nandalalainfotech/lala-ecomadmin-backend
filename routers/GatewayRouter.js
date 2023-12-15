@@ -72,6 +72,7 @@ GatewayRouter.post(
 GatewayRouter.post(
 	"/pay-order",
 	expressAsyncHandler(async (req, res) => {
+		console.log("req-------------->",req)
 		let usermail = req.body.email;
 		let username = req.body.CustomerName;
 		let order = req.body.order_id;
@@ -80,8 +81,12 @@ GatewayRouter.post(
 		let cartItems = req.body.cartItems;
 		let Shopping = "Lala E-Commerce";
 		let total = req.body.Amount;
-		let carrier = req.body.carrier;
-		
+		let carrier = req.body.orders.carrier;
+		let payment = req.body.orders.PaymentMode;
+		let mobile = req.body.orders.phone;
+		let shippingCharge = req.body.orders.ShippingCharges;
+
+		console.log("mobile---------->",mobile)
 
 
 		const customerAddress = await RegisterModel.findById(req.body.delivery);
@@ -94,8 +99,6 @@ GatewayRouter.post(
 		let zipcode = customerAddress.zipcode
 
 		// console.log("cartItems", cartItems)
-		
-		
 		const cusAddbill = await RegisterModel.findById(req.body.billing);
 		let fnameb = cusAddbill.fname;
 		let address1b = cusAddbill.address1;
@@ -112,8 +115,9 @@ GatewayRouter.post(
 		let dataTime = time;
 		let dataCartItems = cartItems;
 		let dataShopping = Shopping;
+		let dataShippingCharge = shippingCharge
 		let dataTotal = total;
-		let DataCarrier = carrier;
+		let dataCarrier = carrier;
 		let dataCusFname = fnamed;
 		let dataCusAddress1 = address1;
 		let dataCusAddress2 = address2;
@@ -128,16 +132,39 @@ GatewayRouter.post(
 		let dataBillStatename = statenameb;
 		let dataBillCountryName = countryNameb;
 		let dataBillZipcode = zipcodeb;
-		pdfData.push({
-			dataUserMail, dataUserName, dataOrder, dataTime, dataCartItems, dataShopping, dataTotal, DataCarrier,
-			dataCusFname, dataCusAddress1, dataCusAddress2, dataCusCityName, dataCusStatename, dataCusCountryName, dataCusZipcode,
-			dataBillFname, dataBillAddress1, dataBillAddress2, dataBillCityName, dataBillStatename, dataBillCountryName, dataBillZipcode,
-		})
-		console.log("pdfData===>", pdfData);
+		let dataPaymentMode = payment;
+		let datamobile = mobile;
+		let productdata = [];
+		let dataProductTotal = dataTotal - dataCartItems.ShippingCharges;
 
-		var html = fss.readFileSync(`./image/sample.html`, "utf8");
+		let productsItem = cartdetails.map((items) => {
+			// console.log("items-------------->", items)
+			productdata.push(items)
+		});
+
+		function toBase64(filePath) {
+			const img = fss.readFileSync(filePath);
+
+			return Buffer.from(img).toString('base64');
+		}
+
+		const base64String = toBase64('./image/p11.jpg');
+		// console.log(base64String);
+
+		const withPrefix = 'data:image/jpg;base64,' + base64String;
+		// console.log(withPrefix);
+
+
+		pdfData.push({
+			dataUserMail, dataUserName, dataOrder, dataTime, dataCartItems, dataShopping, dataTotal, dataCarrier,dataPaymentMode,datamobile,dataShippingCharge,
+			dataCusFname, dataCusAddress1, dataCusAddress2, dataCusCityName, dataCusStatename, dataCusCountryName, dataCusZipcode,
+			dataBillFname, dataBillAddress1, dataBillAddress2, dataBillCityName, dataBillStatename, dataBillCountryName, dataBillZipcode, productdata, dataProductTotal, withPrefix
+		})
+		// console.log("pdfData------------------------>", pdfData)
+
+		var html = fss.readFileSync(`pdf.html`, "utf8");
 		var options = {
-			format: "A3",
+			format: "A4",
 			orientation: "portrait",
 			border: "10mm",
 		};
@@ -169,7 +196,7 @@ GatewayRouter.post(
 				});
 		}
 
-		
+
 		try {
 			const {
 				amount,
@@ -201,9 +228,9 @@ GatewayRouter.post(
 					pass: process.env.EMAIL_PASSWORD,
 				},
 			});
-			
 
-			
+
+
 			const __filename = path.resolve();
 			const htmlFile = path.join(__filename, 'test.html');
 			console.log("htmlFile", htmlFile);
@@ -905,7 +932,7 @@ GatewayRouter.post(
 				  </tbody>
 				</table>
 			  </div>`,
-			
+
 				attachments: [
 					{
 						__filename: "sample.pdf",
