@@ -73,8 +73,14 @@ OrderrRouter.put("/assignstatus/:id", isAuth, async (req, res) => {
         from: process.env.SENDER_EMAIL,
         to: statusmailid,
         subject: "Order Status Change",
-        html: `<div><h1>Hi ${statususer},</h1><h2 style="background-color:powderblue;">Your order is ${statusmaster}.</h2><h2></br></br></h2>
-      </div>`,
+        html: `<div style="margin: 0%">
+				<table bgcolor="#ffffff" style="width: 50%">
+				  <tbody>
+					<tr>
+					  <td
+						align="center"
+						style="border: 4px solid #333333; padding: 2px 0"
+					  ><h1>Hi ${statususer},</h1><h2 style="background-color:powderblue;">Your order is ${statusmaster}.</h2><h2></br></br></h2></td></tr><tbody><table><div>`,
       };
       transporter.sendMail(mailOptions, function (error, info) {
        
