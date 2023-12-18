@@ -180,8 +180,8 @@ AttributeValueRouter.delete(
 AttributeValueRouter.put(
   "/attvalueactive/:id",
   isAuth,
-  isAdmin,
-  isSeller,
+  // isAdmin,
+  // isSeller,
   async (req, res) => {
     // console.log("req", req);
     const attributeId = req.body.checkboxId;
@@ -207,8 +207,8 @@ AttributeValueRouter.put(
 AttributeValueRouter.put(
   "/attvalueupdate/:id",
   isAuth,
-  isAdmin,
-  isSeller,
+  // isAdmin,
+  // isSeller,
   async (req, res) => {
     // console.log("req", req);
     const attributeId = req.body.id;

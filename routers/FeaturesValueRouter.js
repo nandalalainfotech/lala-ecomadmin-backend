@@ -35,9 +35,9 @@ FeaturesValueRouter.get(
 FeaturesValueRouter.put(
   "/:id",
   isAuth,
-  isSeller,
-  isAdmin,
-  isSellerOrAdmin,
+  // isSeller,
+  // isAdmin,
+  // isSellerOrAdmin,
   expressAsyncHandler(async (req, res) => {
     const FeaturesId = req.params.id;
     const Featuresupdate = await FeaturesValue.findById(FeaturesId);
@@ -54,9 +54,9 @@ FeaturesValueRouter.put(
 FeaturesValueRouter.post(
   "/",
   isAuth,
-  isSeller,
-  isAdmin,
-  isSellerOrAdmin,
+  // isSeller,
+  // isAdmin,
+  // isSellerOrAdmin,
   expressAsyncHandler(async (req, res) => {
     const feature = new FeaturesValue({
       featurevalue: req.body.Featurevalue,
@@ -83,8 +83,8 @@ FeaturesValueRouter.delete(
 FeaturesValueRouter.put(
   "/fvaluective/:id",
   isAuth,
-  isAdmin,
-  isSeller,
+  // isAdmin,
+  // isSeller,
   async (req, res) => {
     const attributeId = req.body.checkboxId;
     let updatecAtt = [];
@@ -109,8 +109,8 @@ FeaturesValueRouter.put(
 FeaturesValueRouter.put(
   "/fvalueEnable/:id",
   isAuth,
-  isAdmin,
-  isSeller,
+  // isAdmin,
+  // isSeller,
   async (req, res) => {
     const attributeId = req.body.id;
 

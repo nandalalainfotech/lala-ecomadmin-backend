@@ -6,7 +6,7 @@ const stateSchema = new mongoose.Schema(
     zone: { type: String, required: false },
     country: { type: String, required: false },
     checked: { type: Boolean, required: false },
-    countrtyId: { type: Boolean, required: false },
+    countrtyId: { type: String, required: false },
   },
   {
     timestamps: true,
