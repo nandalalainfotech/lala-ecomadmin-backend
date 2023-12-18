@@ -136,8 +136,8 @@ GeneralRouter.put(
 GeneralRouter.delete(
   "/generalmasterdel/:id",
   isAuth,
-  isAdmin,
-  isSeller,
+  // isAdmin,
+  // isSeller,
   expressAsyncHandler(async (req, res) => {
     const generaldatum = await GeneralModel.findById(req.params.id);
     const shipping = await shippingModel.find();
