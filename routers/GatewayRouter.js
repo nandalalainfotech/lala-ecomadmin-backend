@@ -72,21 +72,24 @@ GatewayRouter.post(
 GatewayRouter.post(
 	"/pay-order",
 	expressAsyncHandler(async (req, res) => {
-		console.log("req-------------->",req)
 		let usermail = req.body.email;
 		let username = req.body.CustomerName;
 		let order = req.body.order_id;
 		let date = req.body.Dateandtime.slice(10, 20);
 		let time = req.body.Dateandtime.slice(22, 32);
 		let cartItems = req.body.cartItems;
+		console.log("cartItems------------->>>>>>>>>>>", cartItems)
 		let Shopping = "Lala E-Commerce";
 		let total = req.body.Amount;
-		let carrier = req.body.orders.carrier;
-		let payment = req.body.orders.PaymentMode;
-		let mobile = req.body.orders.phone;
-		let shippingCharge = req.body.orders.ShippingCharges;
-
-		console.log("mobile---------->",mobile)
+		let carrier = req.body.carrier;
+		let payment = req.body.PaymentMode;
+		let mobile = req.body.phone;
+		let shippingCharge = req.body.ShippingCharges;
+		let razorpayPaymentId = req.body.razorpayPaymentId;
+		// let carrier = req.body.orders.carrier;
+		// let payment = req.body.orders.PaymentMode;
+		// let mobile = req.body.orders.phone;
+		// let shippingCharge = req.body.orders.ShippingCharges;
 
 
 		const customerAddress = await RegisterModel.findById(req.body.delivery);
@@ -107,13 +110,15 @@ GatewayRouter.post(
 		let statenameb = cusAddbill.statename;
 		let countryNameb = cusAddbill.countryName;
 		let zipcodeb = cusAddbill.zipcode
-		let cartdetails = req.body.orders.cartItems;
+		let cartdetails = req.body.cartItems;
 		let pdfData = [];
 		let dataUserMail = usermail;
 		let dataUserName = username;
 		let dataOrder = order;
 		let dataTime = time;
 		let dataCartItems = cartItems;
+		// console.log("cartItems-------------------->>>>>>>>",cartItems)
+		let dataPerUnit = dataCartItems.taxincluded;
 		let dataShopping = Shopping;
 		let dataShippingCharge = shippingCharge
 		let dataTotal = total;
@@ -134,13 +139,22 @@ GatewayRouter.post(
 		let dataBillZipcode = zipcodeb;
 		let dataPaymentMode = payment;
 		let datamobile = mobile;
+		let datapaymentid = razorpayPaymentId;
 		let productdata = [];
 		let dataProductTotal = dataTotal - dataCartItems.ShippingCharges;
 
+		console.log("dataPerUnit----------->", dataPerUnit)
 		let productsItem = cartdetails.map((items) => {
+			console.log("items--------------->>>>>>>>>>>>", items)
 			// console.log("items-------------->", items)
+
 			productdata.push(items)
 		});
+		let prod = [];
+		let prodTotal = cartItems.map((items) => {
+			items.AmountprodQtyValue = items.quantity * items.taxincluded
+			prod.push(items)
+		})
 
 		function toBase64(filePath) {
 			const img = fss.readFileSync(filePath);
@@ -156,12 +170,10 @@ GatewayRouter.post(
 
 
 		pdfData.push({
-			dataUserMail, dataUserName, dataOrder, dataTime, dataCartItems, dataShopping, dataTotal, dataCarrier,dataPaymentMode,datamobile,dataShippingCharge,
-			dataCusFname, dataCusAddress1, dataCusAddress2, dataCusCityName, dataCusStatename, dataCusCountryName, dataCusZipcode,
-			dataBillFname, dataBillAddress1, dataBillAddress2, dataBillCityName, dataBillStatename, dataBillCountryName, dataBillZipcode, productdata, dataProductTotal, withPrefix
+			dataUserMail, dataUserName, dataOrder, dataTime, dataCartItems, dataPerUnit, dataShopping, dataTotal, dataCarrier, dataPaymentMode, datamobile, dataShippingCharge,
+			dataCusFname, dataCusAddress1, dataCusAddress2, dataCusCityName, dataCusStatename, dataCusCountryName, dataCusZipcode, datapaymentid, prodTotal,cartItems,
+			dataBillFname, dataBillAddress1, dataBillAddress2, dataBillCityName,prod, dataBillStatename, dataBillCountryName, dataBillZipcode, productdata, dataProductTotal, withPrefix
 		})
-		// console.log("pdfData------------------------>", pdfData)
-
 		var html = fss.readFileSync(`pdf.html`, "utf8");
 		var options = {
 			format: "A4",
