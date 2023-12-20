@@ -72,30 +72,24 @@ GatewayRouter.post(
 GatewayRouter.post(
 	"/pay-order",
 	expressAsyncHandler(async (req, res) => {
+		console.log("req----------->", req)
 		let usermail = req.body.email;
 		let username = req.body.CustomerName;
 		let order = req.body.order_id;
 		let date = req.body.Dateandtime.slice(10, 20);
+		console.log("date--------->",date)
 		let time = req.body.Dateandtime.slice(22, 32);
+		console.log("time--------->",time)
 		let cartItems = req.body.cartItems;
-	
 		let Shopping = "Lala E-Commerce";
+		let paymentId = req.body.razorpayPaymentId;
+		let paymentOrderId = req.body.razorpayOrderId;
 		let total = req.body.Amount;
 		let carrier = req.body.carrier;
 		let payment = req.body.PaymentMode;
 		let mobile = req.body.phone;
 		let shippingCharge = req.body.ShippingCharges;
 		let razorpayPaymentId = req.body.razorpayPaymentId;
-		// let carrier = req.body.orders.carrier;
-		// let payment = req.body.orders.PaymentMode;
-		// let mobile = req.body.orders.phone;
-		// let shippingCharge = req.body.orders.ShippingCharges;
-
-		// let prod = [];
-		// let prodTotal = cartItems.map((items) => {
-		// 	items.AmountprodQtyValue = items.quantity * items.taxincluded
-		// 	prod.push(items)
-		// })
 		const customerAddress = await RegisterModel.findById(req.body.delivery);
 		let fnamed = customerAddress.fname;
 		let address1 = customerAddress.address1;
@@ -105,7 +99,7 @@ GatewayRouter.post(
 		let countryName = customerAddress.countryName;
 		let zipcode = customerAddress.zipcode
 
-	
+
 		const cusAddbill = await RegisterModel.findById(req.body.billing);
 		let fnameb = cusAddbill.fname;
 		let address1b = cusAddbill.address1;
@@ -146,25 +140,19 @@ GatewayRouter.post(
 		let productdata = [];
 		let dataProductTotal = dataTotal - dataCartItems.ShippingCharges;
 
-		
-
-
-		
-		
 		let productsItem = cartdetails.map((items) => {
-			
-			items.AmountprodQtyValue=items.quantity*items.taxincluded
-			
+
+			items.AmountprodQtyValue = items.quantity * items.taxincluded
+
 			productdata.push(items)
 		});
-		
+
 		let totalamount = 0;
-		for (let i = 0; i < cartdetails.length; i++){
+		for (let i = 0; i < cartdetails.length; i++) {
 			console.log("totalamount", cartdetails[i].AmountprodQtyValue)
-				totalamount+=cartdetails[i].AmountprodQtyValue
-			
+			totalamount += cartdetails[i].AmountprodQtyValue
 		}
-		
+
 		console.log("totalamount", totalamount)
 		function toBase64(filePath) {
 			const img = fss.readFileSync(filePath);
@@ -181,9 +169,9 @@ GatewayRouter.post(
 
 		pdfData.push({
 			dataUserMail, dataUserName, dataOrder, dataTime, dataCartItems, dataPerUnit, dataShopping, dataTotal, dataCarrier, dataPaymentMode, datamobile, dataShippingCharge,
-			dataCusFname, dataCusAddress1, dataCusAddress2, dataCusCityName, dataCusStatename, dataCusCountryName, dataCusZipcode, datapaymentid, cartItems,cartdetails,
-			totalamount,
-			dataBillFname, dataBillAddress1, dataBillAddress2, dataBillCityName, dataBillStatename, dataBillCountryName, dataBillZipcode, productdata, dataProductTotal, withPrefix
+			dataCusFname, dataCusAddress1, dataCusAddress2, dataCusCityName, dataCusStatename, dataCusCountryName, dataCusZipcode, datapaymentid, cartItems, cartdetails,
+			totalamount, paymentId, paymentOrderId, dataBillFname, dataBillAddress1, dataBillAddress2, dataBillCityName, dataBillStatename, dataBillCountryName, dataBillZipcode,
+			productdata, dataProductTotal, withPrefix,date,time,
 		})
 		var html = fss.readFileSync(`pdf.html`, "utf8");
 		var options = {
@@ -240,7 +228,7 @@ GatewayRouter.post(
 				},
 			});
 			await newOrder.save();
-			
+
 			var transporter = nodemailer.createTransport({
 				host: "smtp.gmail.com",
 				port: 465,
@@ -256,7 +244,7 @@ GatewayRouter.post(
 
 			const __filename = path.resolve();
 			const htmlFile = path.join(__filename, 'test.html');
-			
+
 			var mailOptions = {
 				from: process.env.SENDER_EMAIL,
 				to: usermail,
