@@ -130,16 +130,14 @@
                     </td>
                 </tr>
 
-                {{#each prod}}
+
                 <tr>
                     <td colspan="12">
                         <hr>
                     </td>
                 </tr>
-
                 {{#each productdata}}
                 <tr>
-
                     <td colspan="2" style="font-size: 20px;  text-align: right;padding: 10px;">
                         {{this.reference}}
                     </td>
@@ -147,23 +145,20 @@
                         {{this.prodname}}
                     </td>
                     <td colspan="2" style="font-size: 20px;  text-align: right;padding: 10px;">
-                        {{this.dataPerUnit}}
+                        {{this.taxincluded}}
                     </td>
                     <td colspan="2" style="font-size: 20px;  text-align: right;padding: 10px;">
                         {{this.quantity}}
                     </td>
-
                     <td colspan="3" style="font-size: 20px;  text-align: right;padding: 10px;">
                         {{this.AmountprodQtyValue}}
                     </td>
-
                 </tr>
                 <tr>
                     <td colspan="12">
                         <hr>
                     </td>
                 </tr>
-                {{/each}}
                 {{/each}}
                 <!-- <tr>
                     <td colspan="12">
@@ -184,7 +179,7 @@
                         Products
                     </td>
                     <td colspan="3" style="font-size: 20px;  text-align: right;padding: 10px;">
-                        {{this.dataProductTotal}}
+                        {{this.totalamount}}
                     </td>
                 </tr>
                 <!-- <tr>

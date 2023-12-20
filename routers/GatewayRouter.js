@@ -78,7 +78,7 @@ GatewayRouter.post(
 		let date = req.body.Dateandtime.slice(10, 20);
 		let time = req.body.Dateandtime.slice(22, 32);
 		let cartItems = req.body.cartItems;
-		console.log("cartItems------------->>>>>>>>>>>", cartItems)
+	
 		let Shopping = "Lala E-Commerce";
 		let total = req.body.Amount;
 		let carrier = req.body.carrier;
@@ -91,7 +91,11 @@ GatewayRouter.post(
 		// let mobile = req.body.orders.phone;
 		// let shippingCharge = req.body.orders.ShippingCharges;
 
-
+		// let prod = [];
+		// let prodTotal = cartItems.map((items) => {
+		// 	items.AmountprodQtyValue = items.quantity * items.taxincluded
+		// 	prod.push(items)
+		// })
 		const customerAddress = await RegisterModel.findById(req.body.delivery);
 		let fnamed = customerAddress.fname;
 		let address1 = customerAddress.address1;
@@ -101,7 +105,7 @@ GatewayRouter.post(
 		let countryName = customerAddress.countryName;
 		let zipcode = customerAddress.zipcode
 
-		// console.log("cartItems", cartItems)
+	
 		const cusAddbill = await RegisterModel.findById(req.body.billing);
 		let fnameb = cusAddbill.fname;
 		let address1b = cusAddbill.address1;
@@ -117,7 +121,6 @@ GatewayRouter.post(
 		let dataOrder = order;
 		let dataTime = time;
 		let dataCartItems = cartItems;
-		// console.log("cartItems-------------------->>>>>>>>",cartItems)
 		let dataPerUnit = dataCartItems.taxincluded;
 		let dataShopping = Shopping;
 		let dataShippingCharge = shippingCharge
@@ -143,19 +146,26 @@ GatewayRouter.post(
 		let productdata = [];
 		let dataProductTotal = dataTotal - dataCartItems.ShippingCharges;
 
-		console.log("dataPerUnit----------->", dataPerUnit)
-		let productsItem = cartdetails.map((items) => {
-			console.log("items--------------->>>>>>>>>>>>", items)
-			// console.log("items-------------->", items)
+		
 
+
+		
+		
+		let productsItem = cartdetails.map((items) => {
+			
+			items.AmountprodQtyValue=items.quantity*items.taxincluded
+			
 			productdata.push(items)
 		});
-		let prod = [];
-		let prodTotal = cartItems.map((items) => {
-			items.AmountprodQtyValue = items.quantity * items.taxincluded
-			prod.push(items)
-		})
-
+		
+		let totalamount = 0;
+		for (let i = 0; i < cartdetails.length; i++){
+			console.log("totalamount", cartdetails[i].AmountprodQtyValue)
+				totalamount+=cartdetails[i].AmountprodQtyValue
+			
+		}
+		
+		console.log("totalamount", totalamount)
 		function toBase64(filePath) {
 			const img = fss.readFileSync(filePath);
 
@@ -171,8 +181,9 @@ GatewayRouter.post(
 
 		pdfData.push({
 			dataUserMail, dataUserName, dataOrder, dataTime, dataCartItems, dataPerUnit, dataShopping, dataTotal, dataCarrier, dataPaymentMode, datamobile, dataShippingCharge,
-			dataCusFname, dataCusAddress1, dataCusAddress2, dataCusCityName, dataCusStatename, dataCusCountryName, dataCusZipcode, datapaymentid, prodTotal,cartItems,
-			dataBillFname, dataBillAddress1, dataBillAddress2, dataBillCityName,prod, dataBillStatename, dataBillCountryName, dataBillZipcode, productdata, dataProductTotal, withPrefix
+			dataCusFname, dataCusAddress1, dataCusAddress2, dataCusCityName, dataCusStatename, dataCusCountryName, dataCusZipcode, datapaymentid, cartItems,cartdetails,
+			totalamount,
+			dataBillFname, dataBillAddress1, dataBillAddress2, dataBillCityName, dataBillStatename, dataBillCountryName, dataBillZipcode, productdata, dataProductTotal, withPrefix
 		})
 		var html = fss.readFileSync(`pdf.html`, "utf8");
 		var options = {
@@ -187,7 +198,7 @@ GatewayRouter.post(
 			context: {
 				invoice: pdfData,
 			},
-			path: "./output.pdf", // it is not required if type is buffer
+			path: "./invoicepdf/Invoice.pdf", // it is not required if type is buffer
 		};
 		if (pdfData?.length === 0) {
 			return null;
@@ -229,7 +240,7 @@ GatewayRouter.post(
 				},
 			});
 			await newOrder.save();
-			//   console.log("usermail", usermail);
+			
 			var transporter = nodemailer.createTransport({
 				host: "smtp.gmail.com",
 				port: 465,
@@ -245,7 +256,7 @@ GatewayRouter.post(
 
 			const __filename = path.resolve();
 			const htmlFile = path.join(__filename, 'test.html');
-			console.log("htmlFile", htmlFile);
+			
 			var mailOptions = {
 				from: process.env.SENDER_EMAIL,
 				to: usermail,
@@ -947,8 +958,8 @@ GatewayRouter.post(
 
 				attachments: [
 					{
-						__filename: "sample.pdf",
-						path: "./image/sample.pdf",
+						__filename: "Invoice.pdf",
+						path: "./invoicepdf/Invoice.pdf",
 					}
 				]
 			};
