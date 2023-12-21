@@ -413,7 +413,7 @@ GatewayRouter.post(
 											face="Open-sans, sans-serif"
 											color="#555454"
 										  >
-											${total}
+										  ₹${total}
 										  </font>
 										</td>
 										<td width="10" style="color: #333; padding: 0">
@@ -605,11 +605,11 @@ GatewayRouter.post(
 											face="Open-sans, sans-serif"
 											color="#555454"
 										  >
-											₹0.00
+											₹${shippingCharge}
 										  </font>
 										</td>
 										<td width="10" style="color: #333; padding: 0">
-										  &nbsp;
+										 &nbsp;
 										</td>
 									  </tr>
 									</tbody>
